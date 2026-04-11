@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Alpha</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<nav class="navbar">
+  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1000px; margin: 0 auto;">
+    <span class="navbar-brand">Project Alpha</span>
+    <span class="navbar-text">标签化 Ticket 管理 · 多选标签为 <strong>AND</strong> 筛选</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <label class="form-label" for="filter-q">按标题搜索</label>
+          <input type="search" id="filter-q" placeholder="关键字…">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label" for="filter-status">按状态筛选</label>
+          <select id="filter-status" class="form-select">
+            <option value="">全部</option>
+            <option value="true">已完成</option>
+            <option value="false">未完成</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label" for="filter-tags">按标签筛选</label>
+          <select id="filter-tags" class="form-select" multiple size="3" style="height: auto;">
+          </select>
+        </div>
+        <div class="col-md-3 text-md-end">
+          <button type="button" class="btn btn-outline-primary me-1" id="btn-refresh">刷新列表</button>
+          <button type="button" class="btn btn-primary" id="btn-new-ticket">新建 Ticket</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+      <tr>
+        <th class="sortable" data-sort="title">标题 <span class="sort-icon"></span></th>
+        <th>标签</th>
+        <th class="sortable" data-sort="completed">状态 <span class="sort-icon"></span></th>
+        <th style="width:14rem">操作</th>
+      </tr>
+      </thead>
+      <tbody id="ticket-rows"></tbody>
+    </table>
+    <div id="pagination" style="padding: 16px; border-top: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
+      <div style="font-size: 13px; color: var(--mac-gray);">
+        共 <span id="total-count">0</span> 条记录
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-prev" disabled>上一页</button>
+        <span id="page-info" style="font-size: 13px;">第 1 页 / 共 1 页</span>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <input type="number" id="page-input" min="1" value="1" style="width: 60px; padding: 4px 8px; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 13px;">
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-go">跳转</button>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-next" disabled>下一页</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ticket 表单 -->
+<div class="modal" id="modal-ticket">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="form-ticket">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ticket-modal-title">Ticket</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="ticket-id">
+          <div style="margin-bottom: 16px;">
+            <label class="form-label" for="ticket-title">标题</label>
+            <input type="text" id="ticket-title" required maxlength="255">
+          </div>
+          <div style="margin-bottom: 16px;">
+            <label class="form-label" for="ticket-description">描述</label>
+            <textarea id="ticket-description" rows="3"></textarea>
+          </div>
+          <div class="form-check" id="row-completed" style="display: none;">
+            <input class="form-check-input" type="checkbox" id="ticket-completed">
+            <label class="form-check-label" for="ticket-completed">已完成</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 添加标签 -->
+<div class="modal" id="modal-add-tag">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">添加标签</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 16px;">
+          <label class="form-label" for="select-existing-tag">已有标签</label>
+          <select id="select-existing-tag"></select>
+        </div>
+        <div style="margin-bottom: 0;">
+          <label class="form-label" for="new-tag-name">或新建名称</label>
+          <input type="text" id="new-tag-name" maxlength="64" placeholder="与上项二选一">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="btn-submit-add-tag">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container">
+  <div id="live-toast" style="display: none;">
+    <div class="toast-body"></div>
+    <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

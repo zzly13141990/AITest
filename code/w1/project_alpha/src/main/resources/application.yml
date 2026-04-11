@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: project-alpha
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=project_alpha;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: zz
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    operations-sorter: method
+    tags-sorter: alpha

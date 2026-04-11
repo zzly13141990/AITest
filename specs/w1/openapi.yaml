@@ -1,0 +1,397 @@
+openapi: 3.0.3
+info:
+  title: Project Alpha API
+  description: |
+    基于标签的 Ticket 管理 REST API（与 `0001-spec.md` 第 6 节一致）。
+    实际部署后可通过 SpringDoc 提供的 `/v3/api-docs` 与 Swagger UI 对照本文件。
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: 本地开发（Spring Boot 默认端口示例）
+
+tags:
+  - name: tickets
+    description: Ticket 的增删改查与完成状态
+  - name: tags
+    description: 标签及与 Ticket 的关联
+
+paths:
+  /api/tickets:
+    get:
+      tags: [tickets]
+      summary: 获取 Ticket 列表
+      description: 支持按标签 ID 过滤与标题关键字搜索；可与文档中 AND/OR 策略对齐。
+      parameters:
+        - name: tagIds
+          in: query
+          description: 标签 ID，可重复传入多个（如 `tagIds=1&tagIds=2`）；具体风格以实现为准。
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+          style: form
+          explode: true
+        - name: q
+          in: query
+          description: 标题模糊搜索关键字
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ticket"
+    post:
+      tags: [tickets]
+      summary: 创建 Ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "400":
+          description: 校验失败
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /api/tickets/{id}:
+    get:
+      tags: [tickets]
+      summary: 获取 Ticket 详情
+      parameters:
+        - $ref: "#/components/parameters/TicketId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "404":
+          description: 未找到
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    put:
+      tags: [tickets]
+      summary: 更新 Ticket
+      parameters:
+        - $ref: "#/components/parameters/TicketId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketUpdate"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "400":
+          description: 校验失败
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "404":
+          description: 未找到
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    delete:
+      tags: [tickets]
+      summary: 删除 Ticket
+      parameters:
+        - $ref: "#/components/parameters/TicketId"
+      responses:
+        "204":
+          description: 无内容（常见）
+        "200":
+          description: 若实现返回确认信息
+        "404":
+          description: 未找到
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /api/tickets/{id}/complete:
+    patch:
+      tags: [tickets]
+      summary: 标记 Ticket 为已完成
+      parameters:
+        - $ref: "#/components/parameters/TicketId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "404":
+          description: 未找到
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /api/tickets/{id}/incomplete:
+    patch:
+      tags: [tickets]
+      summary: 取消完成 Ticket
+      parameters:
+        - $ref: "#/components/parameters/TicketId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "404":
+          description: 未找到
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /api/tags:
+    get:
+      tags: [tags]
+      summary: 获取全部标签
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Tag"
+    post:
+      tags: [tags]
+      summary: 新建标签
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TagCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tag"
+        "400":
+          description: 校验失败
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "409":
+          description: 名称冲突
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /api/tickets/{id}/tags:
+    post:
+      tags: [tags]
+      summary: 为 Ticket 添加标签
+      description: 请求体提供 `tagId` 或 `tagName` 之一（若业务支持按名创建）。
+      parameters:
+        - $ref: "#/components/parameters/TicketId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddTagToTicketRequest"
+      responses:
+        "200":
+          description: OK，返回更新后的 Ticket
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "404":
+          description: Ticket 或 Tag 不存在（视实现）
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /api/tickets/{id}/tags/{tagId}:
+    delete:
+      tags: [tags]
+      summary: 从 Ticket 移除标签关联
+      parameters:
+        - $ref: "#/components/parameters/TicketId"
+        - name: tagId
+          in: path
+          required: true
+          description: 标签主键
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK，返回更新后的 Ticket
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "204":
+          description: 无内容
+        "404":
+          description: 未找到
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+components:
+  parameters:
+    TicketId:
+      name: id
+      in: path
+      required: true
+      description: Ticket 主键
+      schema:
+        type: integer
+        format: int64
+
+  schemas:
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          maxLength: 64
+          example: bug
+      required: [id, name]
+
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+        completed:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO-8601，是否含时区由实现约定
+        updatedAt:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tag"
+      required: [id, title, completed, createdAt, updatedAt, tags]
+
+    TicketCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+      required: [title]
+
+    TicketUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          nullable: true
+        completed:
+          type: boolean
+      required: [title, completed]
+
+    TagCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 64
+      required: [name]
+
+    AddTagToTicketRequest:
+      type: object
+      description: 提供 tagId 或 tagName 之一
+      properties:
+        tagId:
+          type: integer
+          format: int64
+        tagName:
+          type: string
+          maxLength: 64
+
+    FieldError:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+
+    ApiError:
+      type: object
+      description: 与 Spring 默认或自定义错误体对齐即可
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        fieldErrors:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldError"
