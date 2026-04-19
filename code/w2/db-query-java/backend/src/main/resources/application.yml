@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=db_query;encrypt=false;trustServerCertificate=true
+    username: sa
+    password: zz
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+
+openai:
+  api-key: ${OPENAI_API_KEY:}
+  model: gpt-4
+
+logging:
+  level:
+    root: INFO
+    com.projectalpha: DEBUG

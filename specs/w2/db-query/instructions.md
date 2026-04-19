@@ -1,5 +1,5 @@
 # Instrucations
-## 第二周课程 数据库管理工具
+##  数据库管理工具
 
 这是针对 ./w2/db-query 项目的：
    - 使用 Ergonomic Python 风格来编写代码，前端使用typescript

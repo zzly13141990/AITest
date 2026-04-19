@@ -1,0 +1,4 @@
+com\projectalpha\service\SqlValidatorServiceTest.class
+com\projectalpha\service\LlmServiceTest.class
+com\projectalpha\service\MetadataServiceTest.class
+com\projectalpha\service\ConnectionServiceTest.class
