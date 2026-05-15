@@ -2,3 +2,4 @@ node_modules/
 *.exe
 *.7z
 dist/
+release/
