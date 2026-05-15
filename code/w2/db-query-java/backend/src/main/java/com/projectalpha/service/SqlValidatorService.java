@@ -36,8 +36,8 @@ public class SqlValidatorService {
             if (statement instanceof Select) {
                 // 简单实现：检查是否包含TOP或LIMIT子句
                 if (!sql.toLowerCase().contains("top ") && !sql.toLowerCase().contains("limit ")) {
-                    // 对于SQL Server，在SELECT后添加TOP子句
-                    return sql.replaceFirst("(?i)SELECT", "SELECT TOP 1000");
+                    // 不再自动添加TOP限制，让用户自己控制查询结果数量
+                    // 如果需要限制，用户可以在SQL中自行添加TOP或LIMIT子句
                 }
             }
             return sql;

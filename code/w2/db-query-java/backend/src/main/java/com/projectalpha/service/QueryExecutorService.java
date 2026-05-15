@@ -1,111 +1,270 @@
 package com.projectalpha.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.projectalpha.entity.Connection;
+import com.projectalpha.constants.ApplicationConstants;
+import com.projectalpha.constants.ApplicationConstants.Sql;
+import com.projectalpha.constants.DatabaseErrorMessages;
+import com.projectalpha.exception.DatabaseException;
 import com.projectalpha.repository.ConnectionRepository;
+import com.projectalpha.util.DatabaseConnectionUtil;
+import com.projectalpha.util.DatabaseErrorUtil;
+import com.projectalpha.util.ResultSetMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service for executing SQL queries with pagination and result conversion
+ */
 @Service
 public class QueryExecutorService {
+    private static final Logger logger = LoggerFactory.getLogger(QueryExecutorService.class);
+
     private final ConnectionRepository connectionRepository;
     private final SqlValidatorService sqlValidatorService;
     private final ObjectMapper objectMapper;
-    
-    public QueryExecutorService(ConnectionRepository connectionRepository, SqlValidatorService sqlValidatorService, ObjectMapper objectMapper) {
+
+    public QueryExecutorService(ConnectionRepository connectionRepository,
+                            SqlValidatorService sqlValidatorService,
+                            ObjectMapper objectMapper) {
         this.connectionRepository = connectionRepository;
         this.sqlValidatorService = sqlValidatorService;
         this.objectMapper = objectMapper;
     }
-    
+
+    public SqlValidatorService getSqlValidatorService() {
+        return sqlValidatorService;
+    }
+
+    /**
+     * Execute SQL query with pagination support
+     * Supports multiple SQL statements separated by semicolon
+     *
+     * @param connectionId database connection ID
+     * @param sql SQL statement(s) to execute
+     * @param page page number (1-based)
+     * @param pageSize number of rows per page
+     * @return JSON formatted query result
+     * @throws DatabaseException if query execution fails
+     */
     public String executeQuery(long connectionId, String sql, int page, int pageSize) {
-        System.out.println("Executing query for connectionId: " + connectionId);
-        System.out.println("SQL: " + sql);
-        System.out.println("Page: " + page + ", PageSize: " + pageSize);
-        
-        Connection connection = connectionRepository.findById(connectionId)
-                .orElseThrow(() -> new RuntimeException("Connection not found"));
-        
-        System.out.println("Found connection: " + connection.getConnectionName());
-        
-        // 验证并增强SQL
-        String validatedSql = sqlValidatorService.validateAndEnhanceSql(sql);
-        System.out.println("Validated SQL: " + validatedSql);
-        
-        // 执行查询
-        try (java.sql.Connection conn = getConnection(connection);
-             Statement stmt = conn.createStatement()) {
+        logger.info("Executing query for connection ID: {}, page: {}, pageSize: {}", connectionId, page, pageSize);
+        logger.debug("SQL: {}", sql);
+
+        com.projectalpha.entity.Connection connectionEntity = connectionRepository.findById(connectionId)
+                .orElseThrow(() -> new RuntimeException("Connection not found with ID: " + connectionId));
+
+        try (java.sql.Connection connection = getConnection(connectionEntity)) {
+            String[] statements = splitSqlStatements(sql);
             
-            // 检查是否是SELECT语句
-            if (validatedSql.toLowerCase().startsWith("select")) {
-                // 计算总条数
-                int totalCount = getTotalCount(conn, sql);
-                System.out.println("Total count: " + totalCount);
-                
-                // 执行分页查询
-                String paginatedSql = getPaginatedSql(validatedSql, page, pageSize, connection.getDatabaseType());
-                System.out.println("Paginated SQL: " + paginatedSql);
-                
-                try (ResultSet rs = stmt.executeQuery(paginatedSql)) {
-                    System.out.println("Query executed successfully");
-                    // 转换结果为JSON
-                    List<Map<String, Object>> results = convertResultSetToList(rs);
-                    
-                    // 构建分页响应
-                    Map<String, Object> response = new java.util.LinkedHashMap<>();
-                    response.put("total", totalCount);
-                    response.put("page", page);
-                    response.put("pageSize", pageSize);
-                    response.put("data", results);
-                    
-                    String jsonResponse = objectMapper.writeValueAsString(response);
-                    System.out.println("Result converted to JSON: " + jsonResponse.substring(0, Math.min(100, jsonResponse.length())) + "...");
-                    return jsonResponse;
-                }
+            if (statements.length > 1) {
+                return executeMultipleStatements(connection, connectionEntity.getDatabaseType(), statements, page, pageSize);
             } else {
-                // 执行非SELECT语句
-                int affectedRows = stmt.executeUpdate(validatedSql);
-                System.out.println("Update executed successfully, affected rows: " + affectedRows);
-                
-                // 构建响应
-                Map<String, Object> response = new java.util.LinkedHashMap<>();
-                response.put("total", affectedRows);
-                response.put("page", 1);
-                response.put("pageSize", 1);
-                response.put("data", new ArrayList<>());
-                response.put("message", "执行成功，影响行数: " + affectedRows);
-                
-                String jsonResponse = objectMapper.writeValueAsString(response);
-                System.out.println("Result converted to JSON: " + jsonResponse);
-                return jsonResponse;
+                String validatedSql = sqlValidatorService.validateAndEnhanceSql(sql);
+                logger.debug("Validated SQL: {}", validatedSql);
+
+                if (isSelectStatement(validatedSql)) {
+                    return executeSelectQuery(connection, connectionEntity.getDatabaseType(), validatedSql, page, pageSize);
+                } else {
+                    return executeUpdateQuery(connection, validatedSql);
+                }
             }
         } catch (SQLException e) {
-            System.err.println("SQLException: " + e.getMessage());
-            e.printStackTrace();
-            throw new RuntimeException("Failed to execute query: " + e.getMessage(), e);
-        } catch (Exception e) {
-            System.err.println("Exception: " + e.getMessage());
-            e.printStackTrace();
-            throw new RuntimeException("Failed to execute query: " + e.getMessage(), e);
+            throw DatabaseErrorUtil.convertToDatabaseException(e, "Query execution failed");
         }
     }
-    
-    private int getTotalCount(java.sql.Connection conn, String originalSql) throws SQLException {
-        // 对于简单的select 1查询，直接返回1
-        if (originalSql.trim().equalsIgnoreCase("select 1")) {
-            return 1;
+
+    /**
+     * Split SQL statements by semicolon, respecting string literals
+     *
+     * @param sql SQL containing multiple statements
+     * @return array of individual SQL statements
+     */
+    private String[] splitSqlStatements(String sql) {
+        if (sql == null || sql.trim().isEmpty()) {
+            return new String[0];
+        }
+
+        java.util.List<String> statements = new java.util.ArrayList<>();
+        StringBuilder currentStatement = new StringBuilder();
+        boolean inSingleQuote = false;
+        boolean inDoubleQuote = false;
+
+        for (int i = 0; i < sql.length(); i++) {
+            char c = sql.charAt(i);
+            char prevChar = i > 0 ? sql.charAt(i - 1) : '\0';
+
+            if (c == '\'' && prevChar != '\\' && !inDoubleQuote) {
+                inSingleQuote = !inSingleQuote;
+            } else if (c == '"' && prevChar != '\\' && !inSingleQuote) {
+                inDoubleQuote = !inDoubleQuote;
+            } else if (c == ';' && !inSingleQuote && !inDoubleQuote) {
+                String statement = currentStatement.toString().trim();
+                if (!statement.isEmpty()) {
+                    statements.add(statement);
+                }
+                currentStatement = new StringBuilder();
+                continue;
+            }
+
+            currentStatement.append(c);
+        }
+
+        String lastStatement = currentStatement.toString().trim();
+        if (!lastStatement.isEmpty()) {
+            statements.add(lastStatement);
+        }
+
+        return statements.toArray(new String[0]);
+    }
+
+    /**
+     * Execute multiple SQL statements and return combined results
+     *
+     * @param connection database connection
+     * @param databaseType database type
+     * @param statements array of SQL statements
+     * @param page page number
+     * @param pageSize page size
+     * @return JSON formatted combined results
+     */
+    private String executeMultipleStatements(java.sql.Connection connection, String databaseType, 
+                                            String[] statements, int page, int pageSize) {
+        logger.info("Executing {} SQL statements", statements.length);
+        
+        java.util.List<java.util.Map<String, Object>> results = new java.util.ArrayList<>();
+        
+        for (int i = 0; i < statements.length; i++) {
+            String statement = statements[i];
+            logger.debug("Executing statement {}: {}", i + 1, statement);
+            
+            try {
+                String validatedSql = sqlValidatorService.validateAndEnhanceSql(statement);
+                
+                java.util.Map<String, Object> result = new LinkedHashMap<>();
+                result.put("statementIndex", i);
+                result.put("sql", statement);
+                
+                if (isSelectStatement(validatedSql)) {
+                    String jsonResult = executeSelectQuery(connection, databaseType, validatedSql, page, pageSize);
+                    com.fasterxml.jackson.databind.JsonNode node = objectMapper.readTree(jsonResult);
+                    
+                    result.put("type", "SELECT");
+                    result.put("total", node.get("total").asInt());
+                    result.put("page", node.get("page").asInt());
+                    result.put("pageSize", node.get("pageSize").asInt());
+                    result.put("data", objectMapper.convertValue(node.get("data"), List.class));
+                } else {
+                    String jsonResult = executeUpdateQuery(connection, validatedSql);
+                    com.fasterxml.jackson.databind.JsonNode node = objectMapper.readTree(jsonResult);
+                    
+                    result.put("type", "UPDATE");
+                    result.put("affectedRows", node.get("total").asInt());
+                    result.put("message", node.has("message") ? node.get("message").asText() : null);
+                }
+                
+                result.put("success", true);
+                results.add(result);
+            } catch (Exception e) {
+                logger.error("Error executing statement {}: {}", i + 1, e.getMessage());
+                
+                java.util.Map<String, Object> errorResult = new LinkedHashMap<>();
+                errorResult.put("statementIndex", i);
+                errorResult.put("sql", statement);
+                errorResult.put("success", false);
+                errorResult.put("error", e.getMessage());
+                results.add(errorResult);
+            }
         }
         
-        // 构建计算总条数的SQL，为内部查询添加列名
-        String countSql = "SELECT COUNT(*) FROM (" + originalSql + ") as t";
-        System.out.println("Count SQL: " + countSql);
+        java.util.Map<String, Object> response = new LinkedHashMap<>();
+        response.put("multiStatement", true);
+        response.put("count", results.size());
+        response.put("results", results);
         
+        try {
+            return objectMapper.writeValueAsString(response);
+        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+            throw new DatabaseException("Failed to process multiple query results", e);
+        }
+    }
+
+    private String executeSelectQuery(java.sql.Connection connection, String databaseType, String sql, int page, int pageSize) throws SQLException {
+        int totalCount = getTotalCount(connection, sql);
+        logger.debug("Total count: {}", totalCount);
+
+        String paginatedSql = QueryPaginator.buildPaginatedSql(
+                sql, page, pageSize, databaseType);
+        logger.debug("Paginated SQL: {}", paginatedSql);
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(paginatedSql)) {
+
+            List<Map<String, Object>> results = ResultSetMapper.toList(rs);
+            Map<String, Object> response = buildPaginationResponse(
+                    totalCount, page, pageSize, results);
+
+            String jsonResponse = objectMapper.writeValueAsString(response);
+            logger.debug("Query executed successfully, result size: {}", results.size());
+            return jsonResponse;
+        } catch (SQLException e) {
+            throw DatabaseErrorUtil.convertToDatabaseException(e, "Query execution failed");
+        } catch (Exception e) {
+            throw new DatabaseException("Failed to process query results", e);
+        }
+    }
+
+    private String executeUpdateQuery(java.sql.Connection connection, String sql) {
+        long startTime = System.currentTimeMillis();
+        try (Statement stmt = connection.createStatement()) {
+            long executeStartTime = System.currentTimeMillis();
+            int affectedRows = stmt.executeUpdate(sql);
+            long executeEndTime = System.currentTimeMillis();
+            long executeTime = executeEndTime - executeStartTime;
+            long totalTime = executeEndTime - startTime;
+            
+            logger.debug("Update executed successfully, affected rows: {}, executeTime: {}ms, totalTime: {}ms", 
+                    affectedRows, executeTime, totalTime);
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("total", affectedRows);
+            response.put("page", 1);
+            response.put("pageSize", 1);
+            response.put("data", new ArrayList<>());
+            response.put("executeTime", executeTime);
+            response.put("totalTime", totalTime);
+            response.put("message", String.format("执行成功，影响行数: %d", affectedRows));
+
+            return objectMapper.writeValueAsString(response);
+        } catch (SQLException e) {
+            throw DatabaseErrorUtil.convertToDatabaseException(e, "Update execution failed");
+        } catch (Exception e) {
+            throw new DatabaseException("Failed to process update result", e);
+        }
+    }
+
+    /**
+     * Get total count of records for a query
+     *
+     * @param conn database connection
+     * @param sql SQL statement
+     * @return total count
+     * @throws SQLException if database access error occurs
+     */
+    private int getTotalCount(java.sql.Connection conn, String sql) throws SQLException {
+        if (isSimpleSelectOne(sql)) {
+            return 1;
+        }
+
+        String countSql = buildCountQuery(sql);
+        logger.debug("Count SQL: {}", countSql);
+
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(countSql)) {
             if (rs.next()) {
@@ -113,83 +272,102 @@ public class QueryExecutorService {
             }
             return 0;
         } catch (SQLException e) {
-            // 如果出现列名错误，尝试使用更简单的方式
-            System.err.println("Error in getTotalCount, trying alternative approach: " + e.getMessage());
-            // 直接执行原始查询并计数
-            try (Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(originalSql)) {
-                int count = 0;
-                while (rs.next()) {
-                    count++;
-                }
-                return count;
-            } catch (SQLException ex) {
-                // 如果仍然失败，返回1作为默认值
-                System.err.println("Alternative approach also failed, returning default count of 1: " + ex.getMessage());
-                return 1;
+            logger.warn("Count query failed, falling back to alternative method: {}", e.getMessage());
+            return countByIteration(conn, sql);
+        }
+    }
+
+    private String buildCountQuery(String sql) {
+        return String.format("SELECT COUNT(*) FROM (%s) as t", sql);
+    }
+
+    private int countByIteration(java.sql.Connection conn, String sql) throws SQLException {
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            int count = 0;
+            while (rs.next()) {
+                count++;
             }
+            return count;
         }
     }
-    
-    private String getPaginatedSql(String sql, int page, int pageSize, String databaseType) {
-        int offset = (page - 1) * pageSize;
-        
-        switch (databaseType.toLowerCase()) {
-            case "mysql":
-                return sql + " LIMIT " + pageSize + " OFFSET " + offset;
-            case "postgresql":
-                return sql + " LIMIT " + pageSize + " OFFSET " + offset;
-            case "sqlserver":
-                // SQL Server 2012+ 使用 OFFSET FETCH，需要确保有ORDER BY
-                // 并且移除TOP子句，因为SQL Server不允许同时使用TOP和OFFSET
-                String cleanedSql = sql.replaceAll("(?i)TOP \\d+", "");
-                if (cleanedSql.toLowerCase().contains("order by")) {
-                    return cleanedSql + " OFFSET " + offset + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY";
-                } else {
-                    // 如果没有ORDER BY，添加一个默认的ORDER BY以确保OFFSET FETCH语法正确
-                    return cleanedSql + " ORDER BY (SELECT 1) OFFSET " + offset + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY";
-                }
-            default:
-                throw new IllegalArgumentException("Unsupported database type: " + databaseType);
-        }
+
+    private boolean isSimpleSelectOne(String sql) {
+        return sql.trim().equalsIgnoreCase(Sql.SELECT_ONE);
     }
-    
-    private List<Map<String, Object>> convertResultSetToList(ResultSet rs) throws SQLException {
-        ResultSetMetaData metaData = rs.getMetaData();
-        int columnCount = metaData.getColumnCount();
-        
-        List<Map<String, Object>> results = new ArrayList<>();
-        
-        while (rs.next()) {
-            Map<String, Object> row = new java.util.LinkedHashMap<>();
-            for (int i = 1; i <= columnCount; i++) {
-                String columnName = metaData.getColumnName(i);
-                Object value = rs.getObject(i);
-                row.put(columnName, value);
-            }
-            results.add(row);
-        }
-        
-        return results;
+
+    private boolean isSelectStatement(String sql) {
+        return sql != null && sql.trim().toLowerCase().startsWith(Sql.SELECT.toLowerCase());
     }
-    
-    private java.sql.Connection getConnection(Connection connection) throws SQLException {
-        String url = getConnectionUrl(connection);
+
+    private Map<String, Object> buildPaginationResponse(
+            int total, int page, int pageSize, List<Map<String, Object>> data) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("total", total);
+        response.put("page", page);
+        response.put("pageSize", pageSize);
+        response.put("data", data);
+        return response;
+    }
+
+    /**
+     * Get database connection for a given connection entity
+     *
+     * @param connection connection entity
+     * @return database connection
+     * @throws SQLException if database access error occurs
+     */
+    public java.sql.Connection getConnection(com.projectalpha.entity.Connection connection) throws SQLException {
+        String url = DatabaseConnectionUtil.buildJdbcUrl(connection);
         return DriverManager.getConnection(url, connection.getUsername(), connection.getPassword());
     }
-    
-    private String getConnectionUrl(Connection connection) {
-        switch (connection.getDatabaseType().toLowerCase()) {
-            case "mysql":
-                return "jdbc:mysql://" + connection.getHost() + ":" + connection.getPort() + "/" + connection.getDatabaseName() + "?useSSL=false&serverTimezone=UTC";
-            case "postgresql":
-                return "jdbc:postgresql://" + connection.getHost() + ":" + connection.getPort() + "/" + connection.getDatabaseName() + "?sslmode=disable";
-            case "sqlserver":
-                return "jdbc:sqlserver://" + connection.getHost() + ":" + connection.getPort() + ";databaseName=" + connection.getDatabaseName() + ";encrypt=false;trustServerCertificate=true";
+}
+
+/**
+ * Query pagination utility
+ */
+class QueryPaginator {
+    private QueryPaginator() {}
+
+    /**
+     * Build paginated SQL for different database types
+     *
+     * @param originalSql original SQL query
+     * @param page page number (1-based)
+     * @param pageSize number of rows per page
+     * @param databaseType database type (mysql, postgresql, sqlserver)
+     * @return paginated SQL query
+     */
+    public static String buildPaginatedSql(String originalSql, int page, int pageSize, String databaseType) {
+        if (originalSql == null || originalSql.trim().isEmpty()) {
+            throw new IllegalArgumentException("SQL query cannot be empty");
+        }
+
+        int offset = (page - 1) * pageSize;
+
+        switch (databaseType.toLowerCase()) {
+            case DatabaseConnectionUtil.DATABASE_TYPE_MYSQL:
+                return buildMySqlPaginatedSql(originalSql, offset, pageSize);
+            case DatabaseConnectionUtil.DATABASE_TYPE_POSTGRESQL:
+                return buildPostgresPaginatedSql(originalSql, offset, pageSize);
+            case DatabaseConnectionUtil.DATABASE_TYPE_SQLSERVER:
+                return buildSqlServerPaginatedSql(originalSql, offset, pageSize);
             default:
-                throw new IllegalArgumentException("Unsupported database type: " + connection.getDatabaseType());
+                throw new IllegalArgumentException(
+                    String.format("Unsupported database type for pagination: %s", databaseType));
         }
     }
-    
 
+    private static String buildMySqlPaginatedSql(String sql, int offset, int pageSize) {
+        return String.format("%s LIMIT %d OFFSET %d", sql, pageSize, offset);
+    }
+
+    private static String buildPostgresPaginatedSql(String sql, int offset, int pageSize) {
+        return String.format("%s LIMIT %d OFFSET %d", sql, pageSize, offset);
+    }
+
+    private static String buildSqlServerPaginatedSql(String sql, int offset, int pageSize) {
+        return String.format("SELECT * FROM (%s) as paging_subquery ORDER BY (SELECT NULL) OFFSET %d ROWS FETCH NEXT %d ROWS ONLY",
+            sql, offset, pageSize);
+    }
 }

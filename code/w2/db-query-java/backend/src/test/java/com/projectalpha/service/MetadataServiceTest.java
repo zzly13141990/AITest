@@ -58,7 +58,7 @@ class MetadataServiceTest {
         
         when(metadataRepository.findByConnectionId(1L)).thenReturn(metadataList);
         
-        List<MetadataDTO> result = metadataService.getMetadataByConnectionId(1L);
+        List<MetadataDTO> result = metadataService.getMetadataByConnectionId(1L, 1, 100);
         
         assertNotNull(result);
         assertEquals(2, result.size());

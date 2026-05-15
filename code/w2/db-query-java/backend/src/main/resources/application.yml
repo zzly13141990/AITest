@@ -15,11 +15,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
 
-openai:
-  api-key: ${OPENAI_API_KEY:}
-  model: gpt-4
+llm:
+  api-key: "9ed52aaa3e6d4b50abcd95f9681e7501.CoeTwif44GJaGin0"
+  base-url: "https://open.bigmodel.cn/api/anthropic"
+  model: glm-4-flash
 
 logging:
   level:
-    root: INFO
+    root: DEBUG
     com.projectalpha: DEBUG

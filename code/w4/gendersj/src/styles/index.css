@@ -1,0 +1,206 @@
+:root {
+  /* 主色调 */
+  --primary-color: #2563EB;
+  --primary-color-dark: #1D4ED8;
+  --primary-color-light: #DBEAFE;
+  
+  /* 辅助色 */
+  --success-color: #10B981;
+  --warning-color: #F59E0B;
+  --error-color: #EF4444;
+  --info-color: #6366F1;
+  
+  /* 中性色 */
+  --gray-900: #111827;
+  --gray-700: #374151;
+  --gray-500: #6B7280;
+  --gray-300: #D1D5DB;
+  --gray-200: #E5E7EB;
+  --gray-100: #F3F4F6;
+  --gray-50: #F9FAFB;
+  --white: #FFFFFF;
+  
+  /* 间距 */
+  --spacing-xs: 4px;
+  --spacing-s: 8px;
+  --spacing-m: 12px;
+  --spacing-l: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  
+  /* 阴影 */
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-4: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  background-color: var(--gray-50);
+  color: var(--gray-900);
+}
+
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-content {
+  padding: var(--spacing-xl);
+}
+
+.main-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  gap: var(--spacing-xl);
+  height: calc(100vh - 112px);
+}
+
+@media (max-width: 1024px) {
+  .main-container {
+    flex-direction: column;
+    height: auto;
+  }
+}
+
+/* 配置面板 */
+.config-panel {
+  width: 400px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-1);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1024px) {
+  .config-panel {
+    width: 100%;
+  }
+}
+
+/* 预览面板 */
+.preview-panel {
+  flex: 1;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* A4 预览容器 */
+.a4-preview {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  padding: 32px;
+  max-width: 794px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 500px;
+}
+
+.a4-preview h1 {
+  font-size: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+  color: var(--gray-900);
+}
+
+.a4-preview .question-content {
+  line-height: 2;
+  white-space: pre-wrap;
+  font-size: 16px;
+  color: var(--gray-700);
+}
+
+/* 打印样式 */
+@media print {
+  /* 隐藏不需要打印的元素 */
+  .no-print,
+  .config-panel,
+  header,
+  button,
+  .ant-layout-header {
+    display: none !important;
+  }
+  
+  /* 重置布局 */
+  body {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .app-layout {
+    min-height: auto !important;
+  }
+  
+  .app-content {
+    padding: 0 !important;
+  }
+  
+  .main-container {
+    display: block !important;
+    height: auto !important;
+    gap: 0 !important;
+  }
+  
+  .preview-panel {
+    flex: none !important;
+    background: white !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  
+  /* A4 格式优化 */
+  .a4-preview {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    padding: 20mm !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+  }
+  
+  /* 确保试题内容正确显示 */
+  .a4-preview .question-content {
+    line-height: 1.8 !important;
+    font-size: 14pt !important;
+    color: #000 !important;
+  }
+  
+  /* 分页优化 */
+  .a4-preview {
+    page-break-inside: avoid;
+  }
+  
+  .question-content {
+    page-break-inside: avoid;
+  }
+  
+  /* 隐藏滚动条和阴影 */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

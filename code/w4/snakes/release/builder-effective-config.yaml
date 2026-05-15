@@ -1,0 +1,22 @@
+directories:
+  output: release
+  buildResources: build
+appId: com.snakegame.app
+productName: 贪吃蛇对战
+files:
+  - filter:
+      - dist/**/*
+      - backend/dist/**/*
+      - package.json
+      - electron-main.cjs
+      - electron-preload.cjs
+win:
+  target:
+    - nsis
+    - portable
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+electronVersion: 28.3.3

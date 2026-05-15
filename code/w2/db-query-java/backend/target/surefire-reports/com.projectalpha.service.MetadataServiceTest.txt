@@ -1,4 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: com.projectalpha.service.MetadataServiceTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.203 s -- in com.projectalpha.service.MetadataServiceTest
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.082 s <<< FAILURE! -- in com.projectalpha.service.MetadataServiceTest
+com.projectalpha.service.MetadataServiceTest.testGetMetadataByConnectionId -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "org.springframework.data.domain.Page.getContent()" because "metadataPage" is null
+	at com.projectalpha.service.MetadataService.getMetadataByConnectionId(MetadataService.java:78)
+	at com.projectalpha.service.MetadataServiceTest.testGetMetadataByConnectionId(MetadataServiceTest.java:61)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+

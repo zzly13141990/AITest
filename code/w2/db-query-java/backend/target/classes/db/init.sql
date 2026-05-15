@@ -37,11 +37,27 @@ BEGIN
         [table_name] NVARCHAR(255) NOT NULL,
         [table_type] NVARCHAR(50) NOT NULL,
         [columns] NVARCHAR(MAX) NOT NULL,
+        [unique_keys] NVARCHAR(MAX),
+        [check_constraints] NVARCHAR(MAX),
+        [foreign_keys] NVARCHAR(MAX),
+        [indexes] NVARCHAR(MAX),
+        [table_references] NVARCHAR(MAX),
+        [primary_keys] NVARCHAR(MAX),
+        [triggers] NVARCHAR(MAX),
+        [create_body] NVARCHAR(MAX),
         [created_at] DATETIME2(6) DEFAULT GETDATE(),
         [updated_at] DATETIME2(6) DEFAULT GETDATE(),
         CONSTRAINT [PK_metadata] PRIMARY KEY CLUSTERED ([id] ASC),
         CONSTRAINT [FK_metadata_connection] FOREIGN KEY ([connection_id]) REFERENCES [dbo].[connections]([id]) ON DELETE CASCADE
     );
+END
+GO
+
+-- 如果metadata表已存在但缺少create_body字段，则添加它
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[metadata]') AND type in (N'U'))
+    AND NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[metadata]') AND name = 'create_body')
+BEGIN
+    ALTER TABLE [dbo].[metadata] ADD [create_body] NVARCHAR(MAX);
 END
 GO
 

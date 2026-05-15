@@ -44,6 +44,9 @@ public class Metadata {
     @Column(name = "triggers", columnDefinition = "TEXT")
     private String triggers;
     
+    @Column(name = "create_body", columnDefinition = "TEXT")
+    private String createBody;
+    
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
@@ -156,6 +159,14 @@ public class Metadata {
     
     public void setTriggers(String triggers) {
         this.triggers = triggers;
+    }
+    
+    public String getCreateBody() {
+        return createBody;
+    }
+    
+    public void setCreateBody(String createBody) {
+        this.createBody = createBody;
     }
     
     public LocalDateTime getCreatedAt() {

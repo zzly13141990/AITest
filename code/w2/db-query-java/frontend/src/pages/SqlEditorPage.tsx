@@ -1,12 +1,20 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { QueryResult } from '../types';
 import { queryApi } from '../api';
 import SqlEditor from '../components/SqlEditor';
 import QueryResultComponent from '../components/QueryResult';
-import EditDialog from '../components/EditDialog';
 import { useConnection } from '../components/Layout';
+import { ShortcutManager } from '../shortcuts/ShortcutManager';
+import ContextMenu, { MenuItem } from '../components/ContextMenu';
 
-interface Tab {
+interface EditorTab {
+  id: string;
+  title: string;
+  sql: string;
+  hideEditor?: boolean;
+}
+
+interface ResultTab {
   id: string;
   title: string;
   sql: string;
@@ -14,87 +22,119 @@ interface Tab {
   total: number;
   page: number;
   pageSize: number;
-  hideEditor?: boolean;
+  success: boolean;
+  error?: string;
+  updateCount?: number;
+  executeTime?: number;
+  fetchTime?: number;
+  totalTime?: number;
 }
+
+const splitSqlStatements = (sql: string): string[] => {
+  const statements = [];
+  let currentStatement = '';
+  let inSingleQuote = false;
+  let inDoubleQuote = false;
+  let escapeChar = false;
+
+  for (let i = 0; i < sql.length; i++) {
+    const char = sql[i];
+    const prevChar = i > 0 ? sql[i - 1] : '\0';
+
+    if (escapeChar) {
+      currentStatement += char;
+      escapeChar = false;
+      continue;
+    }
+
+    if (char === '\\') {
+      currentStatement += char;
+      escapeChar = true;
+      continue;
+    }
+
+    if (char === '\'' && prevChar !== '\\' && !inDoubleQuote) {
+      inSingleQuote = !inSingleQuote;
+    } else if (char === '"' && prevChar !== '\\' && !inSingleQuote) {
+      inDoubleQuote = !inDoubleQuote;
+    } else if (char === ';' && !inSingleQuote && !inDoubleQuote) {
+      const trimmed = currentStatement.trim();
+      if (trimmed) {
+        statements.push(trimmed);
+      }
+      currentStatement = '';
+      continue;
+    }
+
+    currentStatement += char;
+  }
+
+  const lastStatement = currentStatement.trim();
+  if (lastStatement) {
+    statements.push(lastStatement);
+  }
+
+  return statements;
+};
 
 const SqlEditorPage: React.FC = () => {
   const context = useConnection();
-  console.log('SqlEditorPage: full context object keys:', Object.keys(context));
-  console.log('SqlEditorPage: setOnTableClick raw type:', typeof context.setOnTableClick);
-  console.log('SqlEditorPage: setOnTableClick value:', context.setOnTableClick);
-  
+  const shortcutManager = ShortcutManager.getInstance();
+
   const { selectedConnection, setOnTableClick, setOnObjectClick } = context;
-  
-  console.log('SqlEditorPage render:', { 
-    setOnTableClick: !!setOnTableClick, 
-    setOnObjectClick: !!setOnObjectClick,
-    selectedConnection: selectedConnection?.connectionName 
-  });
-  
-  // Add a ref to track the latest context
+
   const contextRef = useRef(context);
-  
-  // Update the ref whenever context changes
+
   useEffect(() => {
     contextRef.current = context;
-    console.log('Context ref updated:', { selectedConnection: context.selectedConnection?.connectionName });
   }, [context]);
-  
-  const [tabs, setTabs] = useState<Tab[]>([
+
+  const [editorTabs, setEditorTabs] = useState<EditorTab[]>([
     {
       id: '1',
       title: '查询 1',
-      sql: '',
-      result: [],
-      total: 0,
-      page: 1,
-      pageSize: 20
+      sql: ''
     }
   ]);
-  const [activeTabId, setActiveTabId] = useState<string>('1');
+  const [activeEditorTabId, setActiveEditorTabId] = useState<string>('1');
+  
+  const [resultTabs, setResultTabs] = useState<ResultTab[]>([]);
+  const [activeResultTabId, setActiveResultTabId] = useState<string | null>(null);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [editorHeight, setEditorHeight] = useState<number>(60);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState<boolean>(false);
-  const [primaryKeyColumns, setPrimaryKeyColumns] = useState<string[]>([]);
+  const [contextMenuVisible, setContextMenuVisible] = useState<boolean>(false);
+  const [contextMenuPosition, setContextMenuPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [contextMenuItems, setContextMenuItems] = useState<MenuItem[]>([]);
+
   const containerRef = useRef<HTMLDivElement>(null);
-  const tabsRef = useRef<Tab[]>(tabs);
-  const activeTabIdRef = useRef<string>(activeTabId);
+  const editorTabsRef = useRef<EditorTab[]>(editorTabs);
+  const activeEditorTabIdRef = useRef<string>(activeEditorTabId);
+  const resultTabsRef = useRef<ResultTab[]>(resultTabs);
 
-  tabsRef.current = tabs;
-  activeTabIdRef.current = activeTabId;
+  editorTabsRef.current = editorTabs;
+  activeEditorTabIdRef.current = activeEditorTabId;
+  resultTabsRef.current = resultTabs;
 
-  // Get the current active tab
-  const activeTab = useMemo(() => {
-    return tabs.find(tab => tab.id === activeTabId) || tabs[0];
-  }, [tabs, activeTabId]);
+  const activeEditorTab = useMemo(() => {
+    return editorTabs.find(tab => tab.id === activeEditorTabId) || editorTabs[0];
+  }, [editorTabs, activeEditorTabId]);
 
-  const setActiveTab = (updates: Partial<Tab>) => {
-    setTabs(prev => prev.map(tab => 
-      tab.id === activeTabId ? { ...tab, ...updates } : tab
+  const activeResultTab = useMemo(() => {
+    if (!activeResultTabId) return null;
+    return resultTabs.find(tab => tab.id === activeResultTabId) || null;
+  }, [resultTabs, activeResultTabId]);
+
+  const setActiveEditorTab = (updates: Partial<EditorTab>) => {
+    setEditorTabs(prev => prev.map(tab =>
+      tab.id === activeEditorTabId ? { ...tab, ...updates } : tab
     ));
   };
 
   const handleSqlChange = (value: string) => {
-    setActiveTab({ sql: value });
-  };
-
-  const fetchPrimaryKeyColumns = async (tableName: string, connectionId: number) => {
-    try {
-      const metadataList = await metadataApi.getByConnectionId(connectionId);
-      const tableMetadata = metadataList.find(item => item.tableName === tableName && item.tableType === 'TABLE');
-      if (tableMetadata && tableMetadata.primaryKeys) {
-        const primaryKeys = JSON.parse(tableMetadata.primaryKeys);
-        const primaryKeyColumns = primaryKeys.map((key: any) => key.columnName);
-        setPrimaryKeyColumns(primaryKeyColumns);
-      } else {
-        setPrimaryKeyColumns([]);
-      }
-    } catch (err) {
-      console.error('获取主键列失败：', err);
-      setPrimaryKeyColumns([]);
-    }
+    setActiveEditorTab({ sql: value });
   };
 
   const handleExecuteQuery = async (sqlToExecute: string, currentPage: number = 1, pageSize: number = 20, conn?: any) => {
@@ -109,113 +149,170 @@ const SqlEditorPage: React.FC = () => {
       return;
     }
 
-    setLoading(true);
     setError('');
+    setLoading(true);
 
     try {
-      const response = await queryApi.execute(currentConnection.id!, sqlToExecute, currentPage, pageSize);
-      // 使用最新的 activeTabId 来更新正确的标签页
-      const latestActiveTabId = activeTabIdRef.current;
-      setTabs(prev => prev.map(tab => 
-        tab.id === latestActiveTabId ? { 
-          ...tab, 
-          result: response.data, 
-          total: response.total, 
-          page: currentPage, 
-          pageSize: pageSize 
-        } : tab
-      ));
-      setError('');
+      const statements = splitSqlStatements(sqlToExecute);
       
-      // 提取表名并获取主键列
-      const tableName = extractTableName(sqlToExecute);
-      if (tableName && currentConnection.id) {
-        await fetchPrimaryKeyColumns(tableName, currentConnection.id);
+      if (statements.length === 0) {
+        setError('没有有效的SQL语句');
+        setLoading(false);
+        return;
       }
-    } catch (err) {
-      setError('执行查询失败：' + (err as Error).message);
-      // 使用最新的 activeTabId 来更新正确的标签页
-      const latestActiveTabId = activeTabIdRef.current;
-      setTabs(prev => prev.map(tab => 
-        tab.id === latestActiveTabId ? { 
-          ...tab, 
-          result: [], 
-          total: 0 
-        } : tab
-      ));
+
+      if (statements.length === 1) {
+        const response = await queryApi.execute(currentConnection.id!, statements[0], currentPage, pageSize);
+        
+        const newResultTab: ResultTab = {
+          id: `result-${Date.now()}`,
+          title: statements[0].substring(0, 30) + (statements[0].length > 30 ? '...' : ''),
+          sql: statements[0],
+          result: response.data || [],
+          total: response.total || 0,
+          page: currentPage,
+          pageSize: pageSize,
+          success: true,
+          updateCount: response.updateCount || response.affectedRows || response.changedRows || response.total,
+          executeTime: response.executeTime || response.executionTime,
+          fetchTime: response.fetchTime,
+          totalTime: response.totalTime || response.duration
+        };
+
+        setResultTabs([newResultTab]);
+        setActiveResultTabId(newResultTab.id);
+      } else {
+        const newResultTabs: ResultTab[] = [];
+        let hasError = false;
+
+        for (let i = 0; i < statements.length; i++) {
+          const statement = statements[i];
+          try {
+            const response = await queryApi.execute(currentConnection.id!, statement, currentPage, pageSize);
+            
+            newResultTabs.push({
+              id: `result-${Date.now()}-${i}`,
+              title: `${i + 1}. ${statement.substring(0, 25)}${statement.length > 25 ? '...' : ''}`,
+              sql: statement,
+              result: response.data || [],
+              total: response.total || 0,
+              page: currentPage,
+              pageSize: pageSize,
+              success: true,
+              updateCount: response.updateCount || response.affectedRows || response.changedRows || response.total,
+              executeTime: response.executeTime || response.executionTime,
+              fetchTime: response.fetchTime,
+              totalTime: response.totalTime || response.duration
+            });
+          } catch (err: any) {
+            let errorMessage = '';
+            if (err.response && err.response.data) {
+              if (err.response.data.message) {
+                errorMessage = err.response.data.message;
+              } else if (err.response.data.error) {
+                errorMessage = err.response.data.error;
+              } else {
+                errorMessage = JSON.stringify(err.response.data);
+              }
+            } else if (err.message) {
+              errorMessage = err.message;
+            } else {
+              errorMessage = String(err);
+            }
+            
+            newResultTabs.push({
+              id: `result-${Date.now()}-${i}`,
+              title: `${i + 1}. ${statement.substring(0, 25)}${statement.length > 25 ? '...' : ''} (失败)`,
+              sql: statement,
+              result: [],
+              total: 0,
+              page: currentPage,
+              pageSize: pageSize,
+              success: false,
+              error: errorMessage
+            });
+            hasError = true;
+          }
+        }
+
+        setResultTabs(newResultTabs);
+        setActiveResultTabId(newResultTabs[0].id);
+
+        if (hasError) {
+          const failedCount = newResultTabs.filter(t => !t.success).length;
+          setError(`部分语句执行失败（${failedCount}/${newResultTabs.length}）`);
+        }
+      }
+
+      setError('');
+    } catch (err: any) {
+      let errorMessage = '执行查询失败：';
+      if (err.response && err.response.data) {
+        if (err.response.data.message) {
+          errorMessage += err.response.data.message;
+        } else if (err.response.data.error) {
+          errorMessage += err.response.data.error;
+        } else {
+          errorMessage += JSON.stringify(err.response.data);
+        }
+      } else if (err.message) {
+        errorMessage += err.message;
+      } else {
+        errorMessage += String(err);
+      }
+      setError(errorMessage);
+      console.error('查询执行错误:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  React.useEffect(() => {
-    console.log('=== SqlEditorPage useEffect executing ===');
-    console.log('setOnTableClick type:', typeof setOnTableClick);
-    console.log('setOnTableClick value:', setOnTableClick);
-    console.log('setOnObjectClick type:', typeof setOnObjectClick);
-    console.log('setOnObjectClick value:', setOnObjectClick);
-    
-    if (!setOnTableClick) {
-      console.error('ERROR: setOnTableClick is not defined!');
-      return;
-    }
-    if (!setOnObjectClick) {
-      console.error('ERROR: setOnObjectClick is not defined!');
-      return;
-    }
-    
-    console.log('Registering onTableClick callback...');
+  useEffect(() => {
+    if (!setOnTableClick || !setOnObjectClick) return;
+
     setOnTableClick((tableName) => {
-      console.log('onTableClick callback executed with:', tableName);
       if (!tableName) return;
-      
-      // 获取最新的 selectedConnection from ref
+
       const latestConnection = contextRef.current.selectedConnection;
-      console.log('Latest selectedConnection from ref:', latestConnection);
-      
       if (!latestConnection) {
-        console.error('No connection selected!');
         setError('请先选择一个数据库连接');
         return;
       }
-      
-      // 检查是否已存在相同表名的标签页
-      const existingTab = tabsRef.current.find(tab => tab.title === tableName);
-      
+
+      const existingTab = editorTabsRef.current.find(tab => tab.title === tableName);
+
       if (existingTab) {
-        // 如果已存在，切换到该标签页并重新查询
-        console.log('已存在相同表名的标签页，切换并重新查询:', existingTab);
-        setActiveTabId(existingTab.id);
-        
-        // 执行查询并获取主键列
+        setActiveEditorTabId(existingTab.id);
         handleExecuteQuery(existingTab.sql, 1, 20, latestConnection);
       } else {
-        // 如果不存在，创建新标签页
+        if (editorTabsRef.current.length >= 20) {
+          alert('标签页数量已达上限（20个）');
+          return;
+        }
         const sql = `SELECT TOP 1000 * FROM ${tableName}`;
-        const currentTabs = tabsRef.current;
-        const newTabId = (currentTabs.length + 1).toString();
-        const newTab: Tab = {
+        const currentTabs = editorTabsRef.current;
+        const maxId = Math.max(0, ...currentTabs.map(tab => parseInt(tab.id) || 0));
+        const newTabId = (maxId + 1).toString();
+        const newTab: EditorTab = {
           id: newTabId,
           title: tableName,
           sql: sql,
-          result: [],
-          total: 0,
-          page: 1,
-          pageSize: 20,
           hideEditor: true
         };
-        console.log('Creating new tab:', newTab);
-        setTabs(prev => [...prev, newTab]);
-        setActiveTabId(newTabId);
-        
-        // 执行查询并获取主键列
+        setEditorTabs(prev => [...prev, newTab]);
+        setActiveEditorTabId(newTabId);
         handleExecuteQuery(sql, 1, 20, latestConnection);
       }
     });
-    
+
     setOnObjectClick?.((object) => {
-      console.log('onObjectClick callback executed with:', object);
       if (!object || !object.tableName) return;
+
+      if (editorTabsRef.current.length >= 20) {
+        alert('标签页数量已达上限（20个）');
+        return;
+      }
+
       let createSql = '';
       switch (object.tableType) {
         case 'PROC':
@@ -230,30 +327,34 @@ const SqlEditorPage: React.FC = () => {
         default:
           return;
       }
-      
-      const currentTabs = tabsRef.current;
-      const newTabId = (currentTabs.length + 1).toString();
-      const newTab: Tab = {
+
+      const currentTabs = editorTabsRef.current;
+      const maxId = Math.max(0, ...currentTabs.map(tab => parseInt(tab.id) || 0));
+      const newTabId = (maxId + 1).toString();
+      const newTab: EditorTab = {
         id: newTabId,
         title: `${object.tableType}: ${object.tableName}`,
-        sql: createSql,
-        result: [],
-        total: 0,
-        page: 1,
-        pageSize: 20
+        sql: createSql
       };
-      console.log('Creating new tab for object:', newTab);
-      setTabs(prev => [...prev, newTab]);
-      setActiveTabId(newTabId);
+      setEditorTabs(prev => [...prev, newTab]);
+      setActiveEditorTabId(newTabId);
     });
   }, [setOnTableClick, setOnObjectClick, selectedConnection]);
 
   const handlePageChange = (newPage: number) => {
-    handleExecuteQuery(activeTab.sql, newPage);
+    if (!activeResultTab) return;
+    setResultTabs(prev => prev.map(tab =>
+      tab.id === activeResultTabId ? { ...tab, page: newPage } : tab
+    ));
+    handleExecuteQuery(activeResultTab.sql, newPage, activeResultTab.pageSize);
   };
 
   const handlePageSizeChange = (newPageSize: number) => {
-    handleExecuteQuery(activeTab.sql, 1, newPageSize);
+    if (!activeResultTab) return;
+    setResultTabs(prev => prev.map(tab =>
+      tab.id === activeResultTabId ? { ...tab, pageSize: newPageSize, page: 1 } : tab
+    ));
+    handleExecuteQuery(activeResultTab.sql, 1, newPageSize);
   };
 
   const extractTableName = (sql: string): string | null => {
@@ -264,28 +365,21 @@ const SqlEditorPage: React.FC = () => {
     return null;
   };
 
-  const handleEdit = async (_row?: QueryResult, _index?: number) => {
-    handleExecuteQuery(activeTab.sql, activeTab.page);
-  };
-
   const handleDelete = async (row: QueryResult, _index: number) => {
     if (window.confirm('确定要删除这行数据吗？')) {
-      const tableName = extractTableName(activeTab.sql);
-      if (!tableName || !selectedConnection) return;
+      if (!activeResultTab || !selectedConnection) return;
+      
+      const tableName = extractTableName(activeResultTab.sql);
+      if (!tableName) return;
 
-      // Get all columns from the row
       const columns = Object.keys(row);
       if (columns.length === 0) {
         setError('没有可用的列来标识要删除的记录');
         return;
       }
 
-      // Helper function to quote column names
-      const quoteColumn = (column: string) => {
-        return `[${column}]`;
-      };
+      const quoteColumn = (column: string) => `[${column}]`;
 
-      // Create a WHERE clause using all columns to ensure we only delete the specific row
       const whereClause = columns.map(column => {
         const value = row[column];
         const formattedValue = typeof value === 'string' ? `'${value}'` : value;
@@ -297,42 +391,117 @@ const SqlEditorPage: React.FC = () => {
       setLoading(true);
       try {
         await queryApi.execute(selectedConnection.id!, deleteSql);
-        await handleExecuteQuery(activeTab.sql, activeTab.page);
-      } catch (err) {
-        setError('删除失败：' + (err as Error).message);
+        await handleExecuteQuery(activeResultTab.sql, activeResultTab.page, activeResultTab.pageSize);
+      } catch (err: any) {
+        let errorMessage = '删除失败：';
+        if (err.response && err.response.data) {
+          if (err.response.data.message) {
+            errorMessage += err.response.data.message;
+          } else if (err.response.data.error) {
+            errorMessage += err.response.data.error;
+          } else {
+            errorMessage += JSON.stringify(err.response.data);
+          }
+        } else if (err.message) {
+          errorMessage += err.message;
+        } else {
+          errorMessage += String(err);
+        }
+        setError(errorMessage);
+        console.error('删除错误:', err);
       } finally {
         setLoading(false);
       }
     }
   };
 
-  const handleAdd = () => {
-    setIsAddDialogOpen(true);
-  };
+  const handleExportExcel = async (sqlToExport: string, selectedRows?: any[]) => {
+    if (!selectedConnection) {
+      setError('请选择一个数据库连接');
+      return;
+    }
 
-  const handleSaveAdd = async (data: QueryResult) => {
-    const tableName = extractTableName(activeTab.sql);
-    if (!tableName || !selectedConnection) return;
-
-    // Helper function to quote column names
-    const quoteColumn = (column: string) => {
-      return `[${column}]`;
-    };
-
-    const columns = Object.keys(data).map(quoteColumn).join(', ');
-    const values = Object.values(data).map(value => `'${value}'`).join(', ');
-    const insertSql = `INSERT INTO ${tableName} (${columns}) VALUES (${values})`;
+    if (!sqlToExport.trim()) {
+      setError('没有可导出的SQL语句');
+      return;
+    }
 
     setLoading(true);
+    setError('');
+
     try {
-      await queryApi.execute(selectedConnection.id!, insertSql);
-      await handleExecuteQuery(activeTab.sql, activeTab.page);
-      setIsAddDialogOpen(false);
-    } catch (err) {
-      setError('插入失败：' + (err as Error).message);
+      if (selectedRows && selectedRows.length > 0) {
+        exportSelectedRowsToExcel(selectedRows);
+      } else {
+        const response = await queryApi.exportExcel(selectedConnection.id!, sqlToExport);
+        const blob = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `query_result_${new Date().getTime()}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+      setError('');
+    } catch (err: any) {
+      let errorMessage = '导出Excel失败：';
+      if (err.response && err.response.data) {
+        if (err.response.data.message) {
+          errorMessage += err.response.data.message;
+        } else if (err.response.data.error) {
+          errorMessage += err.response.data.error;
+        } else {
+          errorMessage += JSON.stringify(err.response.data);
+        }
+      } else if (err.message) {
+        errorMessage += err.message;
+      } else {
+        errorMessage += String(err);
+      }
+      setError(errorMessage);
+      console.error('导出Excel错误:', err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const exportSelectedRowsToExcel = (data: any[]) => {
+    if (data.length === 0) return;
+    
+    const headers = Object.keys(data[0]);
+    
+    const escapeCsvField = (value: string): string => {
+      if (value.includes(',') || value.includes('"') || value.includes('\n') || value.includes('\r')) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    };
+    
+    let csvContent = headers.map(escapeCsvField).join(',') + '\n';
+    
+    data.forEach(row => {
+      const values = headers.map(header => {
+        const value = row[header];
+        if (value === null || value === undefined) return '';
+        if (typeof value === 'object') return escapeCsvField(JSON.stringify(value));
+        return escapeCsvField(String(value));
+      });
+      csvContent += values.join(',') + '\n';
+    });
+    
+    const blob = new Blob([`\uFEFF${csvContent}`], { type: 'text/csv;charset=utf-8;' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `selected_rows_${new Date().getTime()}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   };
 
   const handleGenerateSql = async () => {
@@ -351,19 +520,36 @@ const SqlEditorPage: React.FC = () => {
 
     try {
       const generatedSql = await queryApi.generate(selectedConnection.id!, naturalLanguageQuery);
-      setActiveTab({ sql: generatedSql });
-    } catch (err) {
-      setError('生成SQL失败：' + (err as Error).message);
+      setActiveEditorTab({ sql: generatedSql });
+    } catch (err: any) {
+      let errorMessage = '生成SQL失败：';
+      if (err.response && err.response.data) {
+        if (err.response.data.message) {
+          errorMessage += err.response.data.message;
+        } else if (err.response.data.error) {
+          errorMessage += err.response.data.error;
+        } else {
+          errorMessage += JSON.stringify(err.response.data);
+        }
+      } else if (err.message) {
+        errorMessage += err.message;
+      } else {
+        errorMessage += String(err);
+      }
+      setError(errorMessage);
+      console.error('SQL生成错误:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleMouseDown = (_e: React.MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsDragging(true);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging || !containerRef.current) return;
 
     const containerRect = containerRef.current.getBoundingClientRect();
@@ -373,107 +559,258 @@ const SqlEditorPage: React.FC = () => {
     if (percentage >= 20 && percentage <= 80) {
       setEditorHeight(percentage);
     }
-  };
+  }, [isDragging]);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('mouseleave', handleMouseUp);
 
       return () => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('mouseleave', handleMouseUp);
       };
     }
-  }, [isDragging]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
-  const addNewTab = () => {
-    const newTabId = (tabs.length + 1).toString();
-    setTabs(prev => [...prev, {
+  const addNewEditorTab = () => {
+    if (editorTabs.length >= 20) {
+      alert('标签页数量已达上限（20个）');
+      return;
+    }
+    const maxId = Math.max(0, ...editorTabs.map(tab => parseInt(tab.id) || 0));
+    const newTabId = (maxId + 1).toString();
+    setEditorTabs(prev => [...prev, {
       id: newTabId,
       title: `查询 ${newTabId}`,
-      sql: '',
-      result: [],
-      total: 0,
-      page: 1,
-      pageSize: 20
+      sql: ''
     }]);
-    setActiveTabId(newTabId);
+    setActiveEditorTabId(newTabId);
+    setResultTabs([]);
+    setActiveResultTabId(null);
   };
 
-  const closeTab = (tabId: string) => {
-    if (tabs.length === 1) return;
-    const newTabs = tabs.filter(tab => tab.id !== tabId);
-    setTabs(newTabs);
-    if (activeTabId === tabId) {
-      setActiveTabId(newTabs[0].id);
+  const closeEditorTab = (tabId: string) => {
+    if (editorTabs.length === 1) return;
+    const newTabs = editorTabs.filter(tab => tab.id !== tabId);
+    setEditorTabs(newTabs);
+    if (activeEditorTabId === tabId) {
+      setActiveEditorTabId(newTabs[0].id);
+      setResultTabs([]);
+      setActiveResultTabId(null);
     }
+  };
+
+  const closeOtherEditorTabs = (currentTabId: string) => {
+    const newTabs = editorTabs.filter(tab => tab.id === currentTabId);
+    if (newTabs.length > 0) {
+      setEditorTabs(newTabs);
+      setActiveEditorTabId(currentTabId);
+      setResultTabs([]);
+      setActiveResultTabId(null);
+      setTimeout(() => {
+        if (editorTabsContainerRef.current) {
+          editorTabsContainerRef.current.scrollLeft = 0;
+        }
+      }, 0);
+    }
+  };
+
+  const closeLeftEditorTabs = (currentIndex: number) => {
+    const newTabs = editorTabs.slice(currentIndex);
+    if (newTabs.length > 0 && newTabs.length < editorTabs.length) {
+      setEditorTabs(newTabs);
+      setActiveEditorTabId(newTabs[0].id);
+      setResultTabs([]);
+      setActiveResultTabId(null);
+    }
+  };
+
+  const closeRightEditorTabs = (currentIndex: number) => {
+    const newTabs = editorTabs.slice(0, currentIndex + 1);
+    if (newTabs.length > 0) {
+      setEditorTabs(newTabs);
+      setActiveEditorTabId(newTabs[newTabs.length - 1].id);
+      setResultTabs([]);
+      setActiveResultTabId(null);
+    }
+  };
+
+  const closeResultTab = (tabId: string) => {
+    if (resultTabs.length === 1) {
+      setResultTabs([]);
+      setActiveResultTabId(null);
+      return;
+    }
+    const newTabs = resultTabs.filter(tab => tab.id !== tabId);
+    setResultTabs(newTabs);
+    if (activeResultTabId === tabId) {
+      setActiveResultTabId(newTabs[0].id);
+    }
+  };
+
+  const handleEditorTabRightClick = (e: React.MouseEvent, tabId: string) => {
+    e.preventDefault();
+    
+    if (editorTabs.length <= 1) return;
+
+    const currentIndex = editorTabs.findIndex(tab => tab.id === tabId);
+    
+    const menuItems: MenuItem[] = [
+      {
+        id: 'close-other',
+        label: '删除除本页外的其他标签',
+        disabled: editorTabs.length <= 1,
+        onClick: () => closeOtherEditorTabs(tabId)
+      },
+      {
+        id: 'close-left',
+        label: '删除左边的标签',
+        disabled: currentIndex <= 0,
+        onClick: () => closeLeftEditorTabs(currentIndex)
+      },
+      {
+        id: 'close-right',
+        label: '删除右边的标签',
+        disabled: currentIndex === editorTabs.length - 1,
+        onClick: () => closeRightEditorTabs(currentIndex)
+      }
+    ];
+
+    setContextMenuItems(menuItems);
+    setContextMenuPosition({ x: e.clientX, y: e.clientY });
+    setContextMenuVisible(true);
+  };
+
+  const handleContextMenuClose = () => {
+    setContextMenuVisible(false);
+  };
+
+  const handleEditorTabClick = (tabId: string) => {
+    setActiveEditorTabId(tabId);
+    setResultTabs([]);
+    setActiveResultTabId(null);
+  };
+
+  useEffect(() => {
+    const handleNewTab = () => {
+      addNewEditorTab();
+    };
+
+    const handleCloseTab = () => {
+      closeEditorTab(activeEditorTabId);
+    };
+
+    const handleNextTab = () => {
+      const currentIndex = editorTabs.findIndex(tab => tab.id === activeEditorTabId);
+      if (currentIndex < editorTabs.length - 1) {
+        setActiveEditorTabId(editorTabs[currentIndex + 1].id);
+      } else {
+        setActiveEditorTabId(editorTabs[0].id);
+      }
+    };
+
+    const handlePrevTab = () => {
+      const currentIndex = editorTabs.findIndex(tab => tab.id === activeEditorTabId);
+      if (currentIndex > 0) {
+        setActiveEditorTabId(editorTabs[currentIndex - 1].id);
+      } else {
+        setActiveEditorTabId(editorTabs[editorTabs.length - 1].id);
+      }
+    };
+
+    const handleExportExcelShortcut = () => {
+      if (activeResultTab) {
+        handleExportExcel(activeResultTab.sql);
+      }
+    };
+
+    shortcutManager.registerHandler('newTab', handleNewTab);
+    shortcutManager.registerHandler('closeTab', handleCloseTab);
+    shortcutManager.registerHandler('nextTab', handleNextTab);
+    shortcutManager.registerHandler('prevTab', handlePrevTab);
+    shortcutManager.registerHandler('exportExcel', handleExportExcelShortcut);
+
+    return () => {
+      shortcutManager.unregisterHandler('newTab', handleNewTab);
+      shortcutManager.unregisterHandler('closeTab', handleCloseTab);
+      shortcutManager.unregisterHandler('nextTab', handleNextTab);
+      shortcutManager.unregisterHandler('prevTab', handlePrevTab);
+      shortcutManager.unregisterHandler('exportExcel', handleExportExcelShortcut);
+    };
+  }, [editorTabs, activeEditorTabId, activeResultTab]);
+
+  const editorTabsContainerRef = useRef<HTMLDivElement>(null);
+  const resultTabsContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollTabs = (containerRef: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
+    if (!containerRef.current) return;
+    const scrollAmount = 200;
+    containerRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth'
+    });
   };
 
   return (
-    <div ref={containerRef} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ 
-        display: 'flex', 
-        borderBottom: '1px solid #ddd', 
-        background: '#f5f5f5',
-        padding: '0 10px'
-      }}>
-        {tabs.map(tab => (
-          <div 
-            key={tab.id}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: '8px 12px',
-              cursor: 'pointer',
-              borderBottom: tab.id === activeTabId ? '2px solid #2196f3' : '2px solid transparent',
-              background: tab.id === activeTabId ? 'white' : 'transparent'
-            }}
-            onClick={() => setActiveTabId(tab.id)}
-          >
-            <span style={{ marginRight: '8px' }}>{tab.title}</span>
-            <span 
-              style={{ 
-                fontSize: '12px', 
-                color: '#999',
-                cursor: 'pointer'
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                closeTab(tab.id);
-              }}
-            >
-              ×
-            </span>
-          </div>
-        ))}
-        <div 
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: '8px 12px',
-            cursor: 'pointer',
-            color: '#666'
-          }}
-          onClick={addNewTab}
+    <div ref={containerRef} className="editor-wrapper">
+      <div className="tab-container">
+        <button 
+          className="tab-scroll-btn" 
+          onClick={() => scrollTabs(editorTabsContainerRef, 'left')}
+          title="向左滚动"
         >
-          + 新建
+          ◀
+        </button>
+        
+        <div ref={editorTabsContainerRef} className="tabs-scroll-container">
+          {editorTabs.map(tab => (
+            <div
+              key={tab.id}
+              data-tab-id={tab.id}
+              className={`tab ${tab.id === activeEditorTabId ? 'active' : ''}`}
+              onClick={() => handleEditorTabClick(tab.id)}
+              onContextMenu={(e) => handleEditorTabRightClick(e, tab.id)}
+            >
+              <span>{tab.title}</span>
+              <span className="tab-close" onClick={(e) => {
+                e.stopPropagation();
+                closeEditorTab(tab.id);
+              }}>
+                ×
+              </span>
+            </div>
+          ))}
         </div>
+        
+        <button 
+          className="tab-scroll-btn" 
+          onClick={() => scrollTabs(editorTabsContainerRef, 'right')}
+          title="向右滚动"
+        >
+          ▶
+        </button>
+        
+        <button className="tab tab-new" onClick={addNewEditorTab} title="新建查询 (Ctrl+T)">
+          +
+        </button>
       </div>
 
-      {!activeTab.hideEditor && (
+      {!activeEditorTab.hideEditor && (
         <>
-          <div style={{ 
-            height: `${editorHeight}%`, 
-            minHeight: '200px', 
+          <div style={{
+            height: `${editorHeight}%`,
+            minHeight: '200px',
             transition: 'height 0.2s ease'
           }}>
             <SqlEditor
-              value={activeTab.sql}
+              value={activeEditorTab.sql}
               onChange={handleSqlChange}
               onExecute={(sqlToExecute) => handleExecuteQuery(sqlToExecute)}
               onGenerate={handleGenerateSql}
@@ -481,59 +818,120 @@ const SqlEditorPage: React.FC = () => {
             />
           </div>
 
-          <div 
+          <div
             style={{
-              height: '8px',
-              background: '#f0f0f0',
+              height: '12px',
+              background: isDragging ? 'var(--brand-primary)' : 'var(--bg-tertiary)',
               cursor: isDragging ? 'grabbing' : 'grab',
-              borderTop: '1px solid #ddd',
-              borderBottom: '1px solid #ddd',
+              borderTop: '1px solid var(--border-color)',
+              borderBottom: '1px solid var(--border-color)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              transition: 'background 0.15s ease'
             }}
             onMouseDown={handleMouseDown}
           >
             <div style={{
-              width: '20px',
-              height: '4px',
-              background: '#ccc',
-              borderRadius: '2px'
+              width: '40px',
+              height: '6px',
+              background: isDragging ? 'var(--bg-primary)' : 'var(--text-muted)',
+              borderRadius: '3px',
+              transition: 'all 0.15s ease'
             }} />
           </div>
         </>
       )}
 
-      <div style={{ 
-        height: activeTab.hideEditor ? '100%' : `${100 - editorHeight}%`, 
+      <div className="query-result" style={{
+        height: activeEditorTab.hideEditor ? '100%' : `${100 - editorHeight}%`,
         minHeight: '150px',
         transition: 'height 0.2s ease'
       }}>
-        <QueryResultComponent
-          result={activeTab.result}
-          total={activeTab.total}
-          page={activeTab.page}
-          pageSize={activeTab.pageSize}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onAdd={handleAdd}
-          loading={loading}
-          error={error}
-          tableName={extractTableName(activeTab.sql) || activeTab.title}
-          connectionId={selectedConnection?.id || 1}
-          primaryKeyColumns={primaryKeyColumns}
-        />
+        {resultTabs.length > 0 && (
+          <div className="result-tabs-container">
+            <button 
+              className="tab-scroll-btn-small" 
+              onClick={() => scrollTabs(resultTabsContainerRef, 'left')}
+              title="向左滚动"
+            >
+              ◀
+            </button>
+            <div ref={resultTabsContainerRef} className="result-tabs-scroll">
+              {resultTabs.map((tab) => (
+                <div
+                  key={tab.id}
+                  className={`result-tab ${tab.id === activeResultTabId ? 'active' : ''}`}
+                  onClick={() => setActiveResultTabId(tab.id)}
+                >
+                  <span>{tab.title}</span>
+                  <span 
+                    className="result-tab-close" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      closeResultTab(tab.id);
+                    }}
+                  >
+                    ×
+                  </span>
+                </div>
+              ))}
+            </div>
+            <button 
+              className="tab-scroll-btn-small" 
+              onClick={() => scrollTabs(resultTabsContainerRef, 'right')}
+              title="向右滚动"
+            >
+              ▶
+            </button>
+          </div>
+        )}
+
+        {activeResultTab ? (
+          <QueryResultComponent
+            key={activeResultTab.id}
+            result={activeResultTab.result}
+            total={activeResultTab.total}
+            page={activeResultTab.page}
+            pageSize={activeResultTab.pageSize}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+            onDelete={handleDelete}
+            loading={loading}
+            error={activeResultTab.error || error}
+            onExportExcel={handleExportExcel}
+            sql={activeResultTab.sql}
+            updateCount={activeResultTab.updateCount}
+            executeTime={activeResultTab.executeTime}
+            fetchTime={activeResultTab.fetchTime}
+            totalTime={activeResultTab.totalTime}
+          />
+        ) : resultTabs.length > 0 ? (
+          <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div className="card-header">
+              <span className="card-header-title">查询结果</span>
+            </div>
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>请选择一个结果页签</p>
+            </div>
+          </div>
+        ) : (
+          <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div className="card-header">
+              <span className="card-header-title">查询结果</span>
+            </div>
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>执行查询后显示结果</p>
+            </div>
+          </div>
+        )}
       </div>
 
-      <EditDialog
-        key="add-dialog"
-        isOpen={isAddDialogOpen}
-        onClose={() => setIsAddDialogOpen(false)}
-        onSave={handleSaveAdd}
-        columns={activeTab.result.length > 0 ? Object.keys(activeTab.result[0]) : []}
-        title="新增数据"
+      <ContextMenu
+        visible={contextMenuVisible}
+        position={contextMenuPosition}
+        items={contextMenuItems}
+        onClose={handleContextMenuClose}
       />
     </div>
   );

@@ -15,6 +15,7 @@ public class MetadataDTO {
     private String tableReferences;
     private String primaryKeys;
     private String triggers;
+    private String createBody;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
@@ -113,6 +114,14 @@ public class MetadataDTO {
     
     public void setTriggers(String triggers) {
         this.triggers = triggers;
+    }
+    
+    public String getCreateBody() {
+        return createBody;
+    }
+    
+    public void setCreateBody(String createBody) {
+        this.createBody = createBody;
     }
     
     public LocalDateTime getCreatedAt() {

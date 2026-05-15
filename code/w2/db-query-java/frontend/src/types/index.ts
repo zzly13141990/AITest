@@ -24,6 +24,7 @@ export interface Metadata {
   tableReferences?: string;
   primaryKeys?: string;
   triggers?: string;
+  createBody?: string;
   createdAt?: string;
   updatedAt?: string;
 }
