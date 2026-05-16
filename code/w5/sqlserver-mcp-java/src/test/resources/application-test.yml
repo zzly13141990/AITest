@@ -8,11 +8,11 @@ database:
   schema-cache-max-tables: 500
   sources:
     - name: testdb
-      host: ${TESTCONTAINERS_HOST}
-      port: ${TESTCONTAINERS_PORT}
-      database: testdb
-      username: SA
-      password: "Test_P@ssword1"
+      host: 127.0.0.1
+      port: 1433
+      database: sup
+      username: sa
+      password: "zz"
       min-pool-size: 1
       max-pool-size: 2
       connection-timeout: 5s
