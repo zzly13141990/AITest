@@ -1,0 +1,50 @@
+mcp:
+  server-name: sqlserver-mcp
+  server-version: 1.0.0
+  transport: stdio
+
+database:
+  schema-load-timeout: 3s
+  schema-cache-max-tables: 500
+  sources:
+    - name: mydb
+      host: localhost
+      port: 1433
+      database: mydb
+      username: readonly_user
+      min-pool-size: 2
+      max-pool-size: 10
+      connection-timeout: 5s
+      max-lifetime: 30m
+      leak-detection-threshold: 60s
+
+llm:
+  api-base-url: https://api.deepseek.com/v1
+  model: deepseek-v4-flash
+  temperature: 0.1
+  max-tokens: 2000
+  timeout: 30s
+  max-retries: 3
+  retry-delays:
+    - 1s
+    - 3s
+    - 9s
+
+query:
+  default-page-size: 100
+  max-page-size: 10000
+  max-rows-total: 100000
+  max-result-bytes: 52428800
+  features:
+    result-meaning-validation: true
+
+observability:
+  metrics:
+    enabled: true
+    jmx-enabled: false
+  tracing:
+    enabled: false
+    endpoint: ""
+  logging:
+    level: INFO
+    audit-log-path: ./logs/audit

@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sun May 17 05:23:12 CST 2026
+http\://maven.vh.com\:8081/repository/oes-releases/.error=
+http\://maven.vh.com\:8081/repository/oes-releases/.lastUpdated=1778966591969
+http\://maven.vh.com\:8081/repository/vadp-releases/.error=
+http\://maven.vh.com\:8081/repository/vadp-releases/.lastUpdated=1778966591869
+https\://repo1.maven.org/maven2/.lastUpdated=1778966592508
