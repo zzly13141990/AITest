@@ -1,0 +1,1042 @@
+STDOUT:
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.etyy:query-tool >-------------------------
+[INFO] Building query-tool 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33: MySQL Connector/J artifacts moved to reverse-DNS compliant Maven 2+ coordinates.
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/springframework/boot/spring-boot-starter-test/2.7.18/spring-boot-starter-test-2.7.18.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/springframework/boot/spring-boot-test/2.7.18/spring-boot-test-2.7.18.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/springframework/boot/spring-boot-test-autoconfigure/2.7.18/spring-boot-test-autoconfigure-2.7.18.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/net/minidev/json-smart/2.4.11/json-smart-2.4.11.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/com/jayway/jsonpath/json-path/2.7.0/json-path-2.7.0.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/net/minidev/accessors-smart/2.4.11/accessors-smart-2.4.11.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/assertj/assertj-core/3.22.0/assertj-core-3.22.0.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/junit/jupiter/junit-jupiter/5.8.2/junit-jupiter-5.8.2.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/junit/jupiter/junit-jupiter-api/5.8.2/junit-jupiter-api-5.8.2.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/junit/jupiter/junit-jupiter-params/5.8.2/junit-jupiter-params-5.8.2.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/junit/jupiter/junit-jupiter-engine/5.8.2/junit-jupiter-engine-5.8.2.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/mockito/mockito-core/4.5.1/mockito-core-4.5.1.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/net/bytebuddy/byte-buddy-agent/1.12.23/byte-buddy-agent-1.12.23.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/mockito/mockito-junit-jupiter/4.5.1/mockito-junit-jupiter-4.5.1.jar
+Downloading from vadp-releases: http://maven.vh.com:8081/repository/vadp-releases/org/springframework/spring-test/5.3.31/spring-test-5.3.31.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/springframework/boot/spring-boot-starter-test/2.7.18/spring-boot-starter-test-2.7.18.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/springframework/boot/spring-boot-test/2.7.18/spring-boot-test-2.7.18.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/com/jayway/jsonpath/json-path/2.7.0/json-path-2.7.0.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/springframework/boot/spring-boot-test-autoconfigure/2.7.18/spring-boot-test-autoconfigure-2.7.18.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/net/minidev/json-smart/2.4.11/json-smart-2.4.11.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/net/minidev/accessors-smart/2.4.11/accessors-smart-2.4.11.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/assertj/assertj-core/3.22.0/assertj-core-3.22.0.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/junit/jupiter/junit-jupiter/5.8.2/junit-jupiter-5.8.2.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/junit/jupiter/junit-jupiter-api/5.8.2/junit-jupiter-api-5.8.2.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/junit/jupiter/junit-jupiter-params/5.8.2/junit-jupiter-params-5.8.2.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/junit/jupiter/junit-jupiter-engine/5.8.2/junit-jupiter-engine-5.8.2.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/mockito/mockito-core/4.5.1/mockito-core-4.5.1.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/net/bytebuddy/byte-buddy-agent/1.12.23/byte-buddy-agent-1.12.23.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/mockito/mockito-junit-jupiter/4.5.1/mockito-junit-jupiter-4.5.1.jar
+Downloading from oes-releases: http://maven.vh.com:8081/repository/oes-releases/org/springframework/spring-test/5.3.31/spring-test-5.3.31.jar
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-starter-test/2.7.18/spring-boot-starter-test-2.7.18.jar
+Progress (1): 1.9/4.8 kB
+Progress (1): 4.8 kB    
+                    
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-starter-test/2.7.18/spring-boot-starter-test-2.7.18.jar (4.8 kB at 22 kB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-test/2.7.18/spring-boot-test-2.7.18.jar
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-test-autoconfigure/2.7.18/spring-boot-test-autoconfigure-2.7.18.jar
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/com/jayway/jsonpath/json-path/2.7.0/json-path-2.7.0.jar
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/net/minidev/json-smart/2.4.11/json-smart-2.4.11.jar
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/net/minidev/accessors-smart/2.4.11/accessors-smart-2.4.11.jar
+Progress (1): 1.9/239 kB
+Progress (1): 18/239 kB 
+Progress (1): 35/239 kB
+Progress (1): 43/239 kB
+Progress (1): 59/239 kB
+Progress (1): 71/239 kB
+Progress (1): 87/239 kB
+Progress (1): 103/239 kB
+Progress (1): 106/239 kB
+Progress (1): 122/239 kB
+Progress (1): 123/239 kB
+Progress (1): 133/239 kB
+Progress (1): 139/239 kB
+Progress (1): 156/239 kB
+Progress (1): 172/239 kB
+Progress (1): 176/239 kB
+Progress (1): 179/239 kB
+Progress (1): 184/239 kB
+Progress (1): 193/239 kB
+Progress (1): 208/239 kB
+Progress (1): 214/239 kB
+Progress (1): 219/239 kB
+Progress (2): 219/239 kB | 1.9/120 kB
+Progress (2): 228/239 kB | 1.9/120 kB
+Progress (2): 228/239 kB | 18/120 kB 
+Progress (2): 239 kB | 18/120 kB    
+Progress (2): 239 kB | 35/120 kB
+Progress (2): 239 kB | 51/120 kB
+Progress (3): 239 kB | 51/120 kB | 1.9/214 kB
+Progress (4): 239 kB | 51/120 kB | 1.9/214 kB | 7.3/271 kB
+Progress (4): 239 kB | 51/120 kB | 1.9/214 kB | 16/271 kB 
+Progress (4): 239 kB | 51/120 kB | 18/214 kB | 16/271 kB 
+Progress (4): 239 kB | 67/120 kB | 18/214 kB | 16/271 kB
+Progress (4): 239 kB | 67/120 kB | 18/214 kB | 32/271 kB
+Progress (4): 239 kB | 67/120 kB | 35/214 kB | 32/271 kB
+Progress (4): 239 kB | 84/120 kB | 35/214 kB | 32/271 kB
+Progress (4): 239 kB | 84/120 kB | 51/214 kB | 32/271 kB
+Progress (4): 239 kB | 100/120 kB | 51/214 kB | 32/271 kB
+Progress (4): 239 kB | 117/120 kB | 51/214 kB | 32/271 kB
+Progress (4): 239 kB | 120 kB | 51/214 kB | 32/271 kB    
+Progress (5): 239 kB | 120 kB | 51/214 kB | 32/271 kB | 7.3/30 kB
+Progress (5): 239 kB | 120 kB | 51/214 kB | 32/271 kB | 16/30 kB 
+Progress (5): 239 kB | 120 kB | 51/214 kB | 48/271 kB | 16/30 kB
+Progress (5): 239 kB | 120 kB | 51/214 kB | 48/271 kB | 30 kB   
+Progress (5): 239 kB | 120 kB | 67/214 kB | 48/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 67/214 kB | 65/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 84/214 kB | 65/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 100/214 kB | 65/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 100/214 kB | 81/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 100/214 kB | 97/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 117/214 kB | 97/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 133/214 kB | 97/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 133/214 kB | 114/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 149/214 kB | 114/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 149/214 kB | 130/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 166/214 kB | 130/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 166/214 kB | 146/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 182/214 kB | 146/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 182/214 kB | 163/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 199/214 kB | 163/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 199/214 kB | 179/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 214 kB | 179/271 kB | 30 kB    
+Progress (5): 239 kB | 120 kB | 214 kB | 196/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 214 kB | 212/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 214 kB | 228/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 214 kB | 245/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 214 kB | 261/271 kB | 30 kB
+Progress (5): 239 kB | 120 kB | 214 kB | 271 kB | 30 kB    
+                                                       
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/net/minidev/accessors-smart/2.4.11/accessors-smart-2.4.11.jar (30 kB at 288 kB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/assertj/assertj-core/3.22.0/assertj-core-3.22.0.jar
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/net/minidev/json-smart/2.4.11/json-smart-2.4.11.jar (120 kB at 1.1 MB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/jupiter/junit-jupiter/5.8.2/junit-jupiter-5.8.2.jar
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-test/2.7.18/spring-boot-test-2.7.18.jar (239 kB at 2.3 MB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/jupiter/junit-jupiter-api/5.8.2/junit-jupiter-api-5.8.2.jar
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/com/jayway/jsonpath/json-path/2.7.0/json-path-2.7.0.jar (271 kB at 2.3 MB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar
+Progress (2): 214 kB | 6.4 kB
+Progress (3): 214 kB | 6.4 kB | 7.3/194 kB
+Progress (4): 214 kB | 6.4 kB | 7.3/194 kB | 0/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 15/194 kB | 0/5.2 MB 
+Progress (4): 214 kB | 6.4 kB | 32/194 kB | 0/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 32/194 kB | 0/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 48/194 kB | 0/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 65/194 kB | 0/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 65/194 kB | 0/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 81/194 kB | 0/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 97/194 kB | 0/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 97/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 114/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 114/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 114/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 114/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 114/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 114/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 130/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 146/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 146/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 163/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 179/194 kB | 0.1/5.2 MB
+Progress (4): 214 kB | 6.4 kB | 194 kB | 0.1/5.2 MB    
+Progress (4): 214 kB | 6.4 kB | 194 kB | 0.2/5.2 MB
+                                                   
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-test-autoconfigure/2.7.18/spring-boot-test-autoconfigure-2.7.18.jar (214 kB at 1.5 MB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/jupiter/junit-jupiter-params/5.8.2/junit-jupiter-params-5.8.2.jar
+Progress (3): 6.4 kB | 194 kB | 0.2/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.2/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.2/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.2/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.2/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.2/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.3/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.3/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.3/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.3/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.3/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.3/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.3/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.3/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.4/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.4/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.4/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.4/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.4/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.4/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.4/5.2 MB
+Progress (3): 6.4 kB | 194 kB | 0.5/5.2 MB
+Progress (4): 6.4 kB | 194 kB | 0.5/5.2 MB | 0.4/100 kB
+Progress (4): 6.4 kB | 194 kB | 0.5/5.2 MB | 17/100 kB 
+                                                      
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/jupiter/junit-jupiter/5.8.2/junit-jupiter-5.8.2.jar (6.4 kB at 38 kB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/jupiter/junit-jupiter-engine/5.8.2/junit-jupiter-engine-5.8.2.jar
+Progress (3): 194 kB | 0.5/5.2 MB | 27/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 27/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 43/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 43/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 43/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.5/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.6/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.6/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.6/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.6/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.6/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.6/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.6/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.7/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.7/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.7/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.7/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.7/5.2 MB | 59/100 kB
+Progress (3): 194 kB | 0.7/5.2 MB | 75/100 kB
+Progress (3): 194 kB | 0.7/5.2 MB | 75/100 kB
+Progress (3): 194 kB | 0.8/5.2 MB | 75/100 kB
+Progress (3): 194 kB | 0.8/5.2 MB | 75/100 kB
+Progress (3): 194 kB | 0.8/5.2 MB | 75/100 kB
+Progress (3): 194 kB | 0.8/5.2 MB | 75/100 kB
+Progress (3): 194 kB | 0.8/5.2 MB | 75/100 kB
+Progress (3): 194 kB | 0.8/5.2 MB | 75/100 kB
+Progress (3): 194 kB | 0.8/5.2 MB | 92/100 kB
+Progress (3): 194 kB | 0.9/5.2 MB | 92/100 kB
+Progress (3): 194 kB | 0.9/5.2 MB | 92/100 kB
+Progress (3): 194 kB | 0.9/5.2 MB | 92/100 kB
+Progress (3): 194 kB | 0.9/5.2 MB | 92/100 kB
+Progress (3): 194 kB | 0.9/5.2 MB | 100 kB   
+Progress (3): 194 kB | 0.9/5.2 MB | 100 kB
+Progress (3): 194 kB | 0.9/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.0/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.0/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.0/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.0/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.0/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.0/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.1/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.1/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.1/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.1/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.1/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.1/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.1/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.2/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.2/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.2/5.2 MB | 100 kB
+Progress (3): 194 kB | 1.2/5.2 MB | 100 kB
+                                          
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/jupiter/junit-jupiter-api/5.8.2/junit-jupiter-api-5.8.2.jar (194 kB at 908 kB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar
+Progress (2): 1.2/5.2 MB | 100 kB
+Progress (2): 1.2/5.2 MB | 100 kB
+Progress (2): 1.2/5.2 MB | 100 kB
+Progress (3): 1.2/5.2 MB | 100 kB | 1.9/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 1.9/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 1.9/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 18/577 kB 
+Progress (3): 1.3/5.2 MB | 100 kB | 35/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 51/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 67/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 84/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 100/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 117/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 133/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 149/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 155/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 164/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 168/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 177/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 180/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 186/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 192/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 203/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 209/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 209/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 226/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 227/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 238/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 238/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.3/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.4/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.4/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.4/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.4/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.4/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.4/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.5/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.5/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.5/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.5/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.5/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.5/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.6/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.6/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.6/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.6/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.6/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.6/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.7/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.7/5.2 MB | 100 kB | 255/577 kB
+Progress (3): 1.7/5.2 MB | 100 kB | 255/577 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 1.9/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 18/230 kB 
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 30/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 43/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 47/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 49/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 50/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 52/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 52/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 53/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 56/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 57/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.7/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 255/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 271/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 285/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 285/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 297/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 303/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 309/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 314/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 320/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 328/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 332/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 344/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 355/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 361/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 367/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 379/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 386/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 402/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 419/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 435/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 451/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 468/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 468/577 kB | 60/230 kB
+Progress (4): 1.8/5.2 MB | 100 kB | 468/577 kB | 60/230 kB
+Progress (4): 1.9/5.2 MB | 100 kB | 468/577 kB | 60/230 kB
+Progress (4): 1.9/5.2 MB | 100 kB | 468/577 kB | 60/230 kB
+Progress (4): 1.9/5.2 MB | 100 kB | 468/577 kB | 60/230 kB
+Progress (4): 1.9/5.2 MB | 100 kB | 468/577 kB | 60/230 kB
+Progress (4): 1.9/5.2 MB | 100 kB | 468/577 kB | 60/230 kB
+Progress (4): 1.9/5.2 MB | 100 kB | 484/577 kB | 60/230 kB
+Progress (4): 1.9/5.2 MB | 100 kB | 501/577 kB | 60/230 kB
+                                                          
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar (100 kB at 352 kB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/mockito/mockito-core/4.5.1/mockito-core-4.5.1.jar
+Progress (3): 1.9/5.2 MB | 517/577 kB | 60/230 kB
+Progress (3): 1.9/5.2 MB | 524/577 kB | 60/230 kB
+Progress (3): 1.9/5.2 MB | 541/577 kB | 60/230 kB
+Progress (3): 1.9/5.2 MB | 557/577 kB | 60/230 kB
+Progress (3): 1.9/5.2 MB | 573/577 kB | 60/230 kB
+Progress (3): 1.9/5.2 MB | 577 kB | 60/230 kB    
+Progress (3): 1.9/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.0/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.0/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.0/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.0/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.0/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.0/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.1/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.1/5.2 MB | 577 kB | 60/230 kB
+Progress (3): 2.1/5.2 MB | 577 kB | 60/230 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 60/230 kB | 1.9/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 60/230 kB | 1.9/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 60/230 kB | 18/186 kB 
+Progress (4): 2.1/5.2 MB | 577 kB | 60/230 kB | 35/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 60/230 kB | 51/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 60/230 kB | 67/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 60/230 kB | 84/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 60/230 kB | 100/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 65/230 kB | 100/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 69/230 kB | 100/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 71/230 kB | 100/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 71/230 kB | 100/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 72/230 kB | 100/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 75/230 kB | 100/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 76/230 kB | 100/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 76/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 78/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 81/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 82/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 84/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 85/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 87/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 88/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 90/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 91/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 92/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 97/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 100/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 101/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 103/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 104/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 106/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 107/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 108/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 111/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 114/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 116/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 119/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 120/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 122/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 125/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 126/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.1/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.2/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.2/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.2/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.2/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.2/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.2/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.3/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.3/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.3/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.3/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.3/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.3/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 127/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 129/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 133/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 133/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 135/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 138/230 kB | 117/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 138/230 kB | 133/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 139/230 kB | 133/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 141/230 kB | 133/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 141/230 kB | 149/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 142/230 kB | 149/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 144/230 kB | 149/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 145/230 kB | 149/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 145/230 kB | 166/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 145/230 kB | 182/186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 145/230 kB | 186 kB    
+Progress (4): 2.4/5.2 MB | 577 kB | 146/230 kB | 186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 148/230 kB | 186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 151/230 kB | 186 kB
+Progress (4): 2.4/5.2 MB | 577 kB | 152/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 152/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 154/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 155/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 157/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 160/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 161/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 163/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 165/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 165/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 168/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 171/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 174/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 177/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 177/230 kB | 186 kB
+Progress (4): 2.5/5.2 MB | 577 kB | 177/230 kB | 186 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 177/230 kB | 186 kB | 1.9/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 177/230 kB | 186 kB | 18/662 kB 
+Progress (5): 2.5/5.2 MB | 577 kB | 177/230 kB | 186 kB | 35/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 177/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 180/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 183/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 184/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 186/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 187/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 189/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.5/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.6/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.6/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.6/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.6/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.6/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.6/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 51/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 67/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 84/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 100/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 117/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 127/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 129/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 133/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 136/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 139/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 148/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 151/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 160/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 168/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 171/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 183/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 186/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 192/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 195/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 203/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 206/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 192/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 195/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 195/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 200/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 205/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.7/5.2 MB | 577 kB | 205/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 205/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 205/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 205/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 205/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 208/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 208/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 209/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 211/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 211/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 214/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 215/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 218/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 218/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 221/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 222/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 224/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 225/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.8/5.2 MB | 577 kB | 227/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.9/5.2 MB | 577 kB | 227/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.9/5.2 MB | 577 kB | 230/230 kB | 186 kB | 215/662 kB
+Progress (5): 2.9/5.2 MB | 577 kB | 230 kB | 186 kB | 215/662 kB    
+Progress (5): 2.9/5.2 MB | 577 kB | 230 kB | 186 kB | 215/662 kB
+Progress (5): 2.9/5.2 MB | 577 kB | 230 kB | 186 kB | 215/662 kB
+Progress (5): 2.9/5.2 MB | 577 kB | 230 kB | 186 kB | 215/662 kB
+Progress (5): 2.9/5.2 MB | 577 kB | 230 kB | 186 kB | 215/662 kB
+Progress (5): 2.9/5.2 MB | 577 kB | 230 kB | 186 kB | 215/662 kB
+Progress (5): 3.0/5.2 MB | 577 kB | 230 kB | 186 kB | 215/662 kB
+Progress (5): 3.0/5.2 MB | 577 kB | 230 kB | 186 kB | 215/662 kB
+Progress (5): 3.0/5.2 MB | 577 kB | 230 kB | 186 kB | 218/662 kB
+                                                                
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/jupiter/junit-jupiter-params/5.8.2/junit-jupiter-params-5.8.2.jar (577 kB at 1.5 MB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/net/bytebuddy/byte-buddy-agent/1.12.23/byte-buddy-agent-1.12.23.jar
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 224/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 238/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 250/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 253/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 262/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 273/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 285/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 291/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 307/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 309/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 325/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 341/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 358/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 374/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 390/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.0/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.1/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.1/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.1/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.1/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.1/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.1/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.2/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.2/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.2/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.2/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.2/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.2/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 395/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 411/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 414/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 425/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 437/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 449/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 452/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 468/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 472/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 481/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 484/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.3/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.4/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.4/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.4/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.4/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.4/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.4/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.4/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.5/5.2 MB | 230 kB | 186 kB | 495/662 kB
+Progress (4): 3.5/5.2 MB | 230 kB | 186 kB | 495/662 kB
+                                                       
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar (186 kB at 428 kB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/mockito/mockito-junit-jupiter/4.5.1/mockito-junit-jupiter-4.5.1.jar
+Progress (3): 3.5/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.5/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.5/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.5/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.6/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.6/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.6/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.6/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.6/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.6/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.7/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.7/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.7/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.7/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.7/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.7/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.8/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.8/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.8/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.8/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.8/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.8/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.9/5.2 MB | 230 kB | 495/662 kB
+Progress (3): 3.9/5.2 MB | 230 kB | 495/662 kB
+                                              
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/junit/jupiter/junit-jupiter-engine/5.8.2/junit-jupiter-engine-5.8.2.jar (230 kB at 504 kB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/spring-test/5.3.31/spring-test-5.3.31.jar
+Progress (2): 3.9/5.2 MB | 507/662 kB
+Progress (2): 3.9/5.2 MB | 510/662 kB
+Progress (2): 3.9/5.2 MB | 519/662 kB
+Progress (2): 3.9/5.2 MB | 526/662 kB
+Progress (2): 3.9/5.2 MB | 543/662 kB
+Progress (2): 3.9/5.2 MB | 552/662 kB
+Progress (2): 3.9/5.2 MB | 568/662 kB
+Progress (2): 3.9/5.2 MB | 584/662 kB
+Progress (2): 3.9/5.2 MB | 601/662 kB
+Progress (2): 3.9/5.2 MB | 617/662 kB
+Progress (2): 3.9/5.2 MB | 633/662 kB
+Progress (2): 3.9/5.2 MB | 650/662 kB
+Progress (2): 3.9/5.2 MB | 662 kB    
+Progress (2): 3.9/5.2 MB | 662 kB
+Progress (2): 3.9/5.2 MB | 662 kB
+Progress (2): 3.9/5.2 MB | 662 kB
+Progress (2): 3.9/5.2 MB | 662 kB
+Progress (2): 4.0/5.2 MB | 662 kB
+Progress (2): 4.0/5.2 MB | 662 kB
+Progress (2): 4.0/5.2 MB | 662 kB
+Progress (2): 4.0/5.2 MB | 662 kB
+Progress (2): 4.0/5.2 MB | 662 kB
+Progress (2): 4.0/5.2 MB | 662 kB
+Progress (2): 4.1/5.2 MB | 662 kB
+Progress (2): 4.1/5.2 MB | 662 kB
+Progress (3): 4.1/5.2 MB | 662 kB | 4.8/257 kB
+Progress (3): 4.1/5.2 MB | 662 kB | 4.8/257 kB
+Progress (3): 4.1/5.2 MB | 662 kB | 4.8/257 kB
+Progress (3): 4.1/5.2 MB | 662 kB | 4.8/257 kB
+Progress (3): 4.1/5.2 MB | 662 kB | 21/257 kB 
+Progress (3): 4.1/5.2 MB | 662 kB | 21/257 kB
+Progress (3): 4.1/5.2 MB | 662 kB | 38/257 kB
+Progress (3): 4.2/5.2 MB | 662 kB | 38/257 kB
+Progress (3): 4.2/5.2 MB | 662 kB | 38/257 kB
+Progress (3): 4.2/5.2 MB | 662 kB | 38/257 kB
+Progress (3): 4.2/5.2 MB | 662 kB | 54/257 kB
+Progress (3): 4.2/5.2 MB | 662 kB | 54/257 kB
+Progress (3): 4.2/5.2 MB | 662 kB | 70/257 kB
+Progress (3): 4.2/5.2 MB | 662 kB | 70/257 kB
+Progress (3): 4.2/5.2 MB | 662 kB | 70/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 70/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 87/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 92/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 95/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 95/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 104/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 104/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 104/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 104/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 104/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 120/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 126/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 126/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 142/257 kB
+Progress (3): 4.3/5.2 MB | 662 kB | 148/257 kB
+Progress (3): 4.4/5.2 MB | 662 kB | 148/257 kB
+Progress (3): 4.4/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.4/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.4/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.4/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.4/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.4/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.5/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.5/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.5/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.5/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.5/5.2 MB | 662 kB | 164/257 kB
+Progress (3): 4.5/5.2 MB | 662 kB | 164/257 kB
+Progress (4): 4.5/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.6/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.6/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.6/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.6/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.6/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.6/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 164/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 180/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 181/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 192/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 192/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 200/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 200/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 211/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 222/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 235/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 235/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 247/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 256/257 kB | 5.4 kB
+Progress (4): 4.7/5.2 MB | 662 kB | 257 kB | 5.4 kB    
+Progress (4): 4.7/5.2 MB | 662 kB | 257 kB | 5.4 kB
+Progress (4): 4.8/5.2 MB | 662 kB | 257 kB | 5.4 kB
+Progress (4): 4.8/5.2 MB | 662 kB | 257 kB | 5.4 kB
+Progress (4): 4.8/5.2 MB | 662 kB | 257 kB | 5.4 kB
+Progress (4): 4.8/5.2 MB | 662 kB | 257 kB | 5.4 kB
+                                                   
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/mockito/mockito-core/4.5.1/mockito-core-4.5.1.jar (662 kB at 1.2 MB/s)
+Progress (3): 4.8/5.2 MB | 257 kB | 5.4 kB
+Progress (3): 4.8/5.2 MB | 257 kB | 5.4 kB
+Progress (3): 4.9/5.2 MB | 257 kB | 5.4 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 7.3/792 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 15/792 kB 
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 15/792 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 32/792 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 32/792 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 48/792 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 48/792 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 65/792 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 65/792 kB
+Progress (4): 4.9/5.2 MB | 257 kB | 5.4 kB | 65/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 65/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 65/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 81/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 81/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 97/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 97/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 97/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.0/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.1/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.1/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.1/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.1/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.1/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.1/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.2/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.2/5.2 MB | 257 kB | 5.4 kB | 114/792 kB
+Progress (4): 5.2/5.2 MB | 257 kB | 5.4 kB | 130/792 kB
+Progress (4): 5.2/5.2 MB | 257 kB | 5.4 kB | 130/792 kB
+Progress (4): 5.2/5.2 MB | 257 kB | 5.4 kB | 146/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 146/792 kB    
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 163/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 179/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 195/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 198/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 206/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 211/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 218/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 222/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 230/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 234/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 241/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 244/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 253/792 kB
+Progress (4): 5.2 MB | 257 kB | 5.4 kB | 257/792 kB
+                                                   
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/mockito/mockito-junit-jupiter/4.5.1/mockito-junit-jupiter-4.5.1.jar (5.4 kB at 9.5 kB/s)
+Progress (3): 5.2 MB | 257 kB | 264/792 kB
+Progress (3): 5.2 MB | 257 kB | 267/792 kB
+Progress (3): 5.2 MB | 257 kB | 276/792 kB
+Progress (3): 5.2 MB | 257 kB | 282/792 kB
+Progress (3): 5.2 MB | 257 kB | 288/792 kB
+Progress (3): 5.2 MB | 257 kB | 299/792 kB
+Progress (3): 5.2 MB | 257 kB | 311/792 kB
+Progress (3): 5.2 MB | 257 kB | 314/792 kB
+Progress (3): 5.2 MB | 257 kB | 323/792 kB
+Progress (3): 5.2 MB | 257 kB | 328/792 kB
+Progress (3): 5.2 MB | 257 kB | 334/792 kB
+Progress (3): 5.2 MB | 257 kB | 337/792 kB
+Progress (3): 5.2 MB | 257 kB | 346/792 kB
+Progress (3): 5.2 MB | 257 kB | 350/792 kB
+Progress (3): 5.2 MB | 257 kB | 358/792 kB
+Progress (3): 5.2 MB | 257 kB | 365/792 kB
+Progress (3): 5.2 MB | 257 kB | 369/792 kB
+Progress (3): 5.2 MB | 257 kB | 375/792 kB
+Progress (3): 5.2 MB | 257 kB | 381/792 kB
+Progress (3): 5.2 MB | 257 kB | 384/792 kB
+Progress (3): 5.2 MB | 257 kB | 393/792 kB
+Progress (3): 5.2 MB | 257 kB | 397/792 kB
+Progress (3): 5.2 MB | 257 kB | 404/792 kB
+Progress (3): 5.2 MB | 257 kB | 407/792 kB
+Progress (3): 5.2 MB | 257 kB | 416/792 kB
+Progress (3): 5.2 MB | 257 kB | 422/792 kB
+Progress (3): 5.2 MB | 257 kB | 438/792 kB
+Progress (3): 5.2 MB | 257 kB | 447/792 kB
+Progress (3): 5.2 MB | 257 kB | 458/792 kB
+Progress (3): 5.2 MB | 257 kB | 464/792 kB
+Progress (3): 5.2 MB | 257 kB | 474/792 kB
+Progress (3): 5.2 MB | 257 kB | 479/792 kB
+Progress (3): 5.2 MB | 257 kB | 486/792 kB
+Progress (3): 5.2 MB | 257 kB | 496/792 kB
+Progress (3): 5.2 MB | 257 kB | 498/792 kB
+Progress (3): 5.2 MB | 257 kB | 509/792 kB
+Progress (3): 5.2 MB | 257 kB | 515/792 kB
+Progress (3): 5.2 MB | 257 kB | 524/792 kB
+Progress (3): 5.2 MB | 257 kB | 529/792 kB
+Progress (3): 5.2 MB | 257 kB | 545/792 kB
+Progress (3): 5.2 MB | 257 kB | 552/792 kB
+Progress (3): 5.2 MB | 257 kB | 568/792 kB
+Progress (3): 5.2 MB | 257 kB | 581/792 kB
+Progress (3): 5.2 MB | 257 kB | 598/792 kB
+Progress (3): 5.2 MB | 257 kB | 614/792 kB
+Progress (3): 5.2 MB | 257 kB | 630/792 kB
+Progress (3): 5.2 MB | 257 kB | 647/792 kB
+Progress (3): 5.2 MB | 257 kB | 663/792 kB
+Progress (3): 5.2 MB | 257 kB | 680/792 kB
+Progress (3): 5.2 MB | 257 kB | 696/792 kB
+Progress (3): 5.2 MB | 257 kB | 712/792 kB
+Progress (3): 5.2 MB | 257 kB | 729/792 kB
+Progress (3): 5.2 MB | 257 kB | 745/792 kB
+Progress (3): 5.2 MB | 257 kB | 761/792 kB
+Progress (3): 5.2 MB | 257 kB | 778/792 kB
+Progress (3): 5.2 MB | 257 kB | 792 kB    
+                                      
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/assertj/assertj-core/3.22.0/assertj-core-3.22.0.jar (5.2 MB at 8.5 MB/s)
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/net/bytebuddy/byte-buddy-agent/1.12.23/byte-buddy-agent-1.12.23.jar (257 kB at 416 kB/s)
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/spring-test/5.3.31/spring-test-5.3.31.jar (792 kB at 1.2 MB/s)
+[INFO] 
+[INFO] --- resources:3.2.0:resources (default-resources) @ query-tool ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] Copying 4 resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ query-tool ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.2.0:testResources (default-testResources) @ query-tool ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory D:\software\gitWorkspace\AI\AITest\code\w5\view-to-api\query-tool\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ query-tool ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 4 source files to D:\software\gitWorkspace\AI\AITest\code\w5\view-to-api\query-tool\target\test-classes
+[INFO] 
+[INFO] --- surefire:2.22.2:test (default-test) @ query-tool ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.2.2:jar (default-jar) @ query-tool ---
+[INFO] Building jar: D:\software\gitWorkspace\AI\AITest\code\w5\view-to-api\query-tool\target\query-tool-1.0.0.jar
+[INFO] 
+[INFO] --- spring-boot:2.7.18:repackage (repackage) @ query-tool ---
+Downloading from viewhigh-p1: http://maven.vh.com:8081/repository/vadp-releases/org/springframework/boot/spring-boot-buildpack-platform/2.7.18/spring-boot-buildpack-platform-2.7.18.pom
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-buildpack-platform/2.7.18/spring-boot-buildpack-platform-2.7.18.pom
+Progress (1): 0.5/3.4 kB
+Progress (1): 3.4 kB    
+                    
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-buildpack-platform/2.7.18/spring-boot-buildpack-platform-2.7.18.pom (3.4 kB at 56 kB/s)
+Downloading from viewhigh-p1: http://maven.vh.com:8081/repository/vadp-releases/org/springframework/boot/spring-boot-loader-tools/2.7.18/spring-boot-loader-tools-2.7.18.pom
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-loader-tools/2.7.18/spring-boot-loader-tools-2.7.18.pom
+Progress (1): 1.9/2.2 kB
+Progress (1): 2.2 kB    
+                    
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-loader-tools/2.7.18/spring-boot-loader-tools-2.7.18.pom (2.2 kB at 27 kB/s)
+Downloading from viewhigh-p1: http://maven.vh.com:8081/repository/vadp-releases/org/springframework/boot/spring-boot-buildpack-platform/2.7.18/spring-boot-buildpack-platform-2.7.18.jar
+Downloading from viewhigh-p1: http://maven.vh.com:8081/repository/vadp-releases/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar
+Downloading from viewhigh-p1: http://maven.vh.com:8081/repository/vadp-releases/org/springframework/boot/spring-boot-loader-tools/2.7.18/spring-boot-loader-tools-2.7.18.jar
+Downloading from viewhigh-p1: http://maven.vh.com:8081/repository/vadp-releases/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-buildpack-platform/2.7.18/spring-boot-buildpack-platform-2.7.18.jar
+Progress (1): 1.9/264 kB
+Progress (1): 18/264 kB 
+Progress (1): 35/264 kB
+Progress (1): 51/264 kB
+Progress (1): 60/264 kB
+Progress (1): 77/264 kB
+Progress (1): 79/264 kB
+Progress (1): 94/264 kB
+Progress (1): 100/264 kB
+Progress (1): 103/264 kB
+Progress (1): 106/264 kB
+Progress (1): 108/264 kB
+Progress (1): 111/264 kB
+Progress (1): 114/264 kB
+Progress (1): 117/264 kB
+Progress (1): 120/264 kB
+Progress (1): 123/264 kB
+Progress (1): 126/264 kB
+Progress (1): 129/264 kB
+Progress (1): 132/264 kB
+Progress (1): 135/264 kB
+Progress (1): 138/264 kB
+Progress (1): 154/264 kB
+Progress (1): 165/264 kB
+Progress (1): 174/264 kB
+Progress (1): 177/264 kB
+Progress (1): 180/264 kB
+Progress (1): 183/264 kB
+Progress (1): 186/264 kB
+Progress (1): 189/264 kB
+Progress (1): 192/264 kB
+Progress (1): 195/264 kB
+Progress (1): 198/264 kB
+Progress (1): 214/264 kB
+Progress (1): 230/264 kB
+Progress (1): 247/264 kB
+Progress (1): 247/264 kB
+Progress (1): 264/264 kB
+Progress (1): 264 kB    
+                    
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-buildpack-platform/2.7.18/spring-boot-buildpack-platform-2.7.18.jar (264 kB at 3.5 MB/s)
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar
+Downloading from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-loader-tools/2.7.18/spring-boot-loader-tools-2.7.18.jar
+Progress (1): 4.8/786 kB
+Progress (1): 21/786 kB 
+Progress (1): 38/786 kB
+Progress (1): 54/786 kB
+Progress (1): 70/786 kB
+Progress (1): 87/786 kB
+Progress (1): 103/786 kB
+Progress (1): 120/786 kB
+Progress (1): 136/786 kB
+Progress (1): 152/786 kB
+Progress (1): 169/786 kB
+Progress (1): 185/786 kB
+Progress (2): 185/786 kB | 0.4/250 kB
+Progress (2): 201/786 kB | 0.4/250 kB
+Progress (3): 201/786 kB | 0.4/250 kB | 1.9/328 kB
+Progress (3): 218/786 kB | 0.4/250 kB | 1.9/328 kB
+Progress (3): 218/786 kB | 17/250 kB | 1.9/328 kB 
+Progress (3): 218/786 kB | 17/250 kB | 18/328 kB 
+Progress (3): 234/786 kB | 17/250 kB | 18/328 kB
+Progress (3): 251/786 kB | 17/250 kB | 18/328 kB
+Progress (3): 263/786 kB | 17/250 kB | 18/328 kB
+Progress (3): 280/786 kB | 17/250 kB | 18/328 kB
+Progress (3): 288/786 kB | 17/250 kB | 18/328 kB
+Progress (3): 288/786 kB | 33/250 kB | 18/328 kB
+Progress (3): 288/786 kB | 50/250 kB | 18/328 kB
+Progress (3): 304/786 kB | 50/250 kB | 18/328 kB
+Progress (3): 304/786 kB | 50/250 kB | 35/328 kB
+Progress (3): 304/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 321/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 322/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 338/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 354/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 371/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 387/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 404/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 411/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 427/786 kB | 66/250 kB | 35/328 kB
+Progress (3): 427/786 kB | 66/250 kB | 51/328 kB
+Progress (3): 427/786 kB | 82/250 kB | 51/328 kB
+Progress (3): 443/786 kB | 82/250 kB | 51/328 kB
+Progress (3): 443/786 kB | 98/250 kB | 51/328 kB
+Progress (3): 443/786 kB | 103/250 kB | 51/328 kB
+Progress (3): 460/786 kB | 103/250 kB | 51/328 kB
+Progress (3): 476/786 kB | 103/250 kB | 51/328 kB
+Progress (3): 493/786 kB | 103/250 kB | 51/328 kB
+Progress (3): 509/786 kB | 103/250 kB | 51/328 kB
+Progress (3): 509/786 kB | 107/250 kB | 51/328 kB
+Progress (3): 524/786 kB | 107/250 kB | 51/328 kB
+Progress (3): 524/786 kB | 107/250 kB | 67/328 kB
+Progress (3): 524/786 kB | 114/250 kB | 67/328 kB
+Progress (3): 527/786 kB | 114/250 kB | 67/328 kB
+Progress (3): 527/786 kB | 114/250 kB | 84/328 kB
+Progress (3): 527/786 kB | 114/250 kB | 85/328 kB
+Progress (3): 527/786 kB | 126/250 kB | 85/328 kB
+Progress (3): 544/786 kB | 126/250 kB | 85/328 kB
+Progress (3): 549/786 kB | 126/250 kB | 85/328 kB
+Progress (3): 549/786 kB | 142/250 kB | 85/328 kB
+Progress (3): 549/786 kB | 142/250 kB | 97/328 kB
+Progress (3): 549/786 kB | 144/250 kB | 97/328 kB
+Progress (3): 549/786 kB | 144/250 kB | 100/328 kB
+Progress (3): 565/786 kB | 144/250 kB | 100/328 kB
+Progress (3): 565/786 kB | 144/250 kB | 103/328 kB
+Progress (3): 582/786 kB | 144/250 kB | 103/328 kB
+Progress (3): 582/786 kB | 144/250 kB | 109/328 kB
+Progress (3): 582/786 kB | 160/250 kB | 109/328 kB
+Progress (3): 582/786 kB | 173/250 kB | 109/328 kB
+Progress (3): 582/786 kB | 189/250 kB | 109/328 kB
+Progress (3): 598/786 kB | 189/250 kB | 109/328 kB
+Progress (3): 598/786 kB | 205/250 kB | 109/328 kB
+Progress (3): 615/786 kB | 205/250 kB | 109/328 kB
+Progress (3): 615/786 kB | 205/250 kB | 125/328 kB
+Progress (3): 615/786 kB | 221/250 kB | 125/328 kB
+Progress (3): 631/786 kB | 221/250 kB | 125/328 kB
+Progress (3): 631/786 kB | 231/250 kB | 125/328 kB
+Progress (3): 631/786 kB | 231/250 kB | 141/328 kB
+Progress (3): 631/786 kB | 248/250 kB | 141/328 kB
+Progress (3): 631/786 kB | 250 kB | 141/328 kB    
+Progress (3): 647/786 kB | 250 kB | 141/328 kB
+Progress (3): 647/786 kB | 250 kB | 158/328 kB
+Progress (3): 647/786 kB | 250 kB | 174/328 kB
+Progress (3): 647/786 kB | 250 kB | 190/328 kB
+Progress (3): 647/786 kB | 250 kB | 207/328 kB
+Progress (3): 664/786 kB | 250 kB | 207/328 kB
+Progress (3): 680/786 kB | 250 kB | 207/328 kB
+Progress (3): 680/786 kB | 250 kB | 223/328 kB
+Progress (3): 697/786 kB | 250 kB | 223/328 kB
+Progress (3): 713/786 kB | 250 kB | 223/328 kB
+Progress (3): 713/786 kB | 250 kB | 240/328 kB
+Progress (3): 729/786 kB | 250 kB | 240/328 kB
+Progress (3): 729/786 kB | 250 kB | 256/328 kB
+Progress (3): 746/786 kB | 250 kB | 256/328 kB
+Progress (3): 746/786 kB | 250 kB | 272/328 kB
+Progress (3): 762/786 kB | 250 kB | 272/328 kB
+Progress (3): 762/786 kB | 250 kB | 289/328 kB
+Progress (3): 778/786 kB | 250 kB | 289/328 kB
+Progress (3): 778/786 kB | 250 kB | 305/328 kB
+Progress (3): 786 kB | 250 kB | 305/328 kB    
+Progress (3): 786 kB | 250 kB | 322/328 kB
+Progress (3): 786 kB | 250 kB | 328 kB    
+                                      
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/springframework/boot/spring-boot-loader-tools/2.7.18/spring-boot-loader-tools-2.7.18.jar (250 kB at 1.7 MB/s)
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar (786 kB at 5.3 MB/s)
+Downloaded from aliyun: http://maven.aliyun.com/nexus/content/groups/public/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar (328 kB at 2.2 MB/s)
+[INFO] Replacing main artifact with repackaged archive
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.358 s
+[INFO] Finished at: 2026-05-20T18:18:08+08:00
+[INFO] ------------------------------------------------------------------------
+
+
+STDERR:
+
+
+Return code: 0

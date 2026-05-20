@@ -1,0 +1,31 @@
+server:
+  port: 8999
+
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/query_log;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: false
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
+# Log cleanup thresholds
+log:
+  cleanup:
+    threshold: 400000
+    target: 300000
+    batch-size: 5000
+
+# Connection pool defaults
+connection-pool:
+  max-pool-size: 20
+  max-pool-count: 10
+  max-total-connections: 200
+  idle-timeout-minutes: 10
+  connection-timeout-ms: 10000
