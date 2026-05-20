@@ -12,7 +12,7 @@ public record AppConfig(
 ) {
     public static AppConfig defaults() {
         return new AppConfig(
-            new McpConfig("sqlserver-mcp", "1.0.0", "stdio"),
+            new McpConfig("sqlserver-mcp", "1.0.0", "sse", 8080),
             new DatabaseConfig(
                 List.of(),
                 Duration.ofSeconds(3),
@@ -36,8 +36,13 @@ public record AppConfig(
     public record McpConfig(
         String serverName,
         String serverVersion,
-        String transport
-    ) {}
+        String transport,
+        int port
+    ) {
+        public McpConfig {
+            if (port == 0) port = 8080;
+        }
+    }
 
     public record DatabaseConfig(
         List<DataSourceConfig> sources,

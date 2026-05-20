@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Console appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Rolling file appender for application logs -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/oes-acct-vouch.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/oes-acct-vouch.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Operation log appender (separate file for audit trail) -->
+    <appender name="OPERATION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/operation.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/operation.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Operation logger (additive=false so operations only go to OPERATION file) -->
+    <logger name="OPERATION_LOGGER" level="INFO" additivity="false">
+        <appender-ref ref="OPERATION" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <!-- SQL logging: log statements executed by JdbcTemplate -->
+    <logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </logger>
+    <logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="TRACE" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <!-- Application loggers -->
+    <logger name="com.oes.acct.vouch" level="INFO" />
+
+    <!-- Root logger -->
+    <root level="WARN">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

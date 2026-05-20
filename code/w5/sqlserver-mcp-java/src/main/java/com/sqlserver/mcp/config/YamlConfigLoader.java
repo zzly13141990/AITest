@@ -1,9 +1,8 @@
 package com.sqlserver.mcp.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.dataformat.yaml.YAMLFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +16,6 @@ import java.util.Map;
 public class YamlConfigLoader {
     private static final Logger log = LoggerFactory.getLogger(YamlConfigLoader.class);
     private static final ObjectMapper YAML_MAPPER = new ObjectMapper(new YAMLFactory())
-        .registerModule(new JavaTimeModule())
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     private final String configPath;
@@ -62,7 +60,8 @@ public class YamlConfigLoader {
         return new com.sqlserver.mcp.config.AppConfig.McpConfig(
             str(mcp, "server-name", "sqlserver-mcp"),
             str(mcp, "server-version", "1.0.0"),
-            str(mcp, "transport", "stdio")
+            str(mcp, "transport", "sse"),
+            intVal(mcp, "port", 8080)
         );
     }
 

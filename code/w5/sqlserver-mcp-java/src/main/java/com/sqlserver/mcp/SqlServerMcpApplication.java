@@ -24,14 +24,20 @@ import com.sqlserver.mcp.validation.SqlAstValidator;
 import com.sqlserver.mcp.validation.SqlValidationRule;
 import io.modelcontextprotocol.json.McpJsonDefaults;
 import io.modelcontextprotocol.server.McpServer;
+import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportProvider;
+import io.modelcontextprotocol.server.transport.HttpServletStreamableServerTransportProvider;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
+import org.eclipse.jetty.ee10.servlet.ServletHolder;
+import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
 
 public class SqlServerMcpApplication {
     private static final Logger log = LoggerFactory.getLogger(SqlServerMcpApplication.class);
@@ -45,9 +51,10 @@ public class SqlServerMcpApplication {
         var databaseConfig = appConfig.database();
         var queryConfig = appConfig.query();
         var llmConfig = appConfig.llm();
-        log.info("AppConfig: server={}, databases={}, llm={}, features={}",
-            appConfig.mcp().serverName(), databaseConfig.sources().size(),
-            llmConfig.model(), queryConfig.features());
+        var mcpConfig = appConfig.mcp();
+        log.info("AppConfig: server={}, databases={}, llm={}, features={}, transport={}",
+            mcpConfig.serverName(), databaseConfig.sources().size(),
+            llmConfig.model(), queryConfig.features(), mcpConfig.transport());
 
         // === Observability ===
         var openTelemetry = OpenTelemetryConfig.create(appConfig.observability());
@@ -112,37 +119,16 @@ public class SqlServerMcpApplication {
         // === Tool ===
         var queryTool = new QueryTool(pipeline);
 
-        // === MCP Server ===
+        // === MCP Server (by transport) ===
         try {
             var mapper = McpJsonDefaults.getMapper();
-            var transportProvider = new StdioServerTransportProvider(mapper);
+            var transport = mcpConfig.transport();
 
-            var server = McpServer.sync(transportProvider)
-                .serverInfo(appConfig.mcp().serverName(), appConfig.mcp().serverVersion())
-                .capabilities(McpSchema.ServerCapabilities.builder()
-                    .tools(true)
-                    .build())
-                .toolCall(queryTool.getToolDefinition(), (exchange, request) -> queryTool.handleCall(request))
-                .build();
-
-            var elapsed = System.currentTimeMillis() - startTime;
-            log.info("SqlServerMcpApplication started in {}ms: transport={}, tools=1",
-                elapsed, appConfig.mcp().transport());
-
-            // Shutdown hook
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                log.info("Shutting down sqlserver-mcp-java...");
-                try {
-                    server.closeGracefully();
-                } catch (Exception e) {
-                    log.warn("Error closing MCP server: {}", e.getMessage());
-                }
-                poolManager.close();
-                log.info("Shutdown complete");
-            }));
-
-            // Block the main thread — stdio transport keeps the process alive
-            Thread.currentThread().join();
+            switch (transport) {
+                case "stdio" -> startStdio(mcpConfig, queryTool, mapper, poolManager, startTime);
+                case "streamable-http" -> startStreamableHttp(mcpConfig, queryTool, mapper, poolManager, startTime);
+                default -> startSse(mcpConfig, queryTool, mapper, poolManager, startTime);
+            }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.info("Server interrupted, shutting down");
@@ -152,4 +138,141 @@ public class SqlServerMcpApplication {
         }
     }
 
+    private static void startStdio(
+        AppConfig.McpConfig mcpConfig,
+        QueryTool queryTool,
+        io.modelcontextprotocol.json.McpJsonMapper mapper,
+        ConnectionPoolManager poolManager,
+        long startTime
+    ) throws Exception {
+        var stdioTransport = new StdioServerTransportProvider(mapper);
+        var mcpServer = McpServer.sync(stdioTransport)
+            .serverInfo(mcpConfig.serverName(), mcpConfig.serverVersion())
+            .capabilities(McpSchema.ServerCapabilities.builder()
+                .tools(true)
+                .build())
+            .toolCall(queryTool.getToolDefinition(),
+                (exchange, request) -> queryTool.handleCall(request))
+            .build();
+
+        var elapsed = System.currentTimeMillis() - startTime;
+        log.info("SqlServerMcpApplication started in {}ms: transport=stdio, tools=1", elapsed);
+
+        var latch = new CountDownLatch(1);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            shutdownMcpServer(mcpServer, poolManager);
+            latch.countDown();
+        }));
+        latch.await();
+    }
+
+    private static void startSse(
+        AppConfig.McpConfig mcpConfig,
+        QueryTool queryTool,
+        io.modelcontextprotocol.json.McpJsonMapper mapper,
+        ConnectionPoolManager poolManager,
+        long startTime
+    ) throws Exception {
+        var port = mcpConfig.port();
+        var sseTransport = HttpServletSseServerTransportProvider.builder()
+            .jsonMapper(mapper)
+            .baseUrl("http://localhost:" + port)
+            .messageEndpoint("/mcp")
+            .sseEndpoint("/mcp")
+            .build();
+
+        var jettyServer = new Server(port);
+        var servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        servletContext.setContextPath("/");
+        jettyServer.setHandler(servletContext);
+        servletContext.addServlet(new ServletHolder(sseTransport), "/*");
+
+        jettyServer.start();
+        log.info("Jetty server started on port {}", port);
+
+        var mcpServer = McpServer.sync(sseTransport)
+            .serverInfo(mcpConfig.serverName(), mcpConfig.serverVersion())
+            .capabilities(McpSchema.ServerCapabilities.builder()
+                .tools(true)
+                .build())
+            .toolCall(queryTool.getToolDefinition(),
+                (exchange, request) -> queryTool.handleCall(request))
+            .build();
+
+        var elapsed = System.currentTimeMillis() - startTime;
+        log.info("SqlServerMcpApplication started in {}ms: transport=sse, port={}, tools=1",
+            elapsed, port);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                jettyServer.stop();
+            } catch (Exception e) {
+                log.warn("Error stopping Jetty: {}", e.getMessage());
+            }
+            shutdownMcpServer(mcpServer, poolManager);
+        }));
+
+        jettyServer.join();
+    }
+
+    private static void startStreamableHttp(
+        AppConfig.McpConfig mcpConfig,
+        QueryTool queryTool,
+        io.modelcontextprotocol.json.McpJsonMapper mapper,
+        ConnectionPoolManager poolManager,
+        long startTime
+    ) throws Exception {
+        var port = mcpConfig.port();
+        var streamTransport = HttpServletStreamableServerTransportProvider.builder()
+            .jsonMapper(mapper)
+            .mcpEndpoint("/mcp")
+            .build();
+
+        var jettyServer = new Server(port);
+        var servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        servletContext.setContextPath("/");
+        jettyServer.setHandler(servletContext);
+        servletContext.addServlet(new ServletHolder(streamTransport), "/*");
+
+        jettyServer.start();
+        log.info("Jetty server started on port {}", port);
+
+        var mcpServer = McpServer.sync(streamTransport)
+            .serverInfo(mcpConfig.serverName(), mcpConfig.serverVersion())
+            .capabilities(McpSchema.ServerCapabilities.builder()
+                .tools(true)
+                .build())
+            .toolCall(queryTool.getToolDefinition(),
+                (exchange, request) -> queryTool.handleCall(request))
+            .build();
+
+        var elapsed = System.currentTimeMillis() - startTime;
+        log.info("SqlServerMcpApplication started in {}ms: transport=streamable-http, port={}, tools=1",
+            elapsed, port);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                jettyServer.stop();
+            } catch (Exception e) {
+                log.warn("Error stopping Jetty: {}", e.getMessage());
+            }
+            shutdownMcpServer(mcpServer, poolManager);
+        }));
+
+        jettyServer.join();
+    }
+
+    private static void shutdownMcpServer(
+        io.modelcontextprotocol.server.McpSyncServer mcpServer,
+        ConnectionPoolManager poolManager
+    ) {
+        log.info("Shutting down sqlserver-mcp-java...");
+        try {
+            mcpServer.closeGracefully();
+        } catch (Exception e) {
+            log.warn("Error closing MCP server: {}", e.getMessage());
+        }
+        poolManager.close();
+        log.info("Shutdown complete");
+    }
 }

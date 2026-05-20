@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__codegraph__structure",
+      "mcp__codegraph__list_functions",
+      "mcp__codegraph__brief",
+      "Bash(npx codegraph *)",
+      "PowerShell(Get-ChildItem -Recurse -Depth 0 -File | ForEach-Object { $_.FullName })",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\software\\\\gitWorkspace\\\\AI\\\\AITest\\\\code\\\\w5\\\\oes-acct-vouch\\\\frontend\" -Recurse -File | Where-Object { $_.Extension -match '\\\\.\\(js|jsx|ts|tsx|vue|html|css\\)$' } | ForEach-Object { $_.FullName })",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\software\\\\gitWorkspace\\\\AI\\\\AITest\\\\code\\\\w5\\\\oes-acct-vouch\\\\frontend\\\\src\" -Recurse -File | Where-Object { $_.Extension -match '\\\\.\\(js|jsx|ts|tsx|vue|css|html\\)$' } | ForEach-Object { $_.FullName })",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\software\\\\gitWorkspace\\\\AI\\\\AITest\\\\code\\\\w5\\\\oes-acct-vouch\\\\src\" -Recurse -File | Where-Object { $_.Extension -match '\\\\.\\(java|xml|yml|properties\\)$' } | ForEach-Object { $_.FullName })",
+      "Bash(npx tsc *)",
+      "mcp__codegraph__where"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "sqlserver-mcp",
+    "codegraph"
+  ]
+}

@@ -2,7 +2,7 @@ package com.sqlserver.mcp.llm;
 
 import com.sqlserver.mcp.config.AppConfig.LlmConfig;
 import com.sqlserver.mcp.model.error.LlmApiException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

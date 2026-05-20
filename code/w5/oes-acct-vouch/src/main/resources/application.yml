@@ -1,0 +1,66 @@
+server:
+  port: 8199
+
+spring:
+  datasource:
+    jdbc-url: jdbc:sqlserver://127.0.0.1:1433;databaseName=OESCQET-0408;encrypt=false;trustServerCertificate=true
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: zz
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 30000
+      pool-name: OesAcctVouchPool
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: viewhigh
+    timeout: 3000
+    lettuce:
+      pool:
+        max-active: 16
+        max-idle: 8
+        min-idle: 4
+
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+  threads:
+    virtual:
+      enabled: true
+
+# 凭证模块自定义配置
+oes:
+  acct:
+    vouch:
+      vouch-no:
+        redis-lock-ttl: 10000
+        redis-lock-wait: 5000
+        redis-lock-retry-delay: 100
+        redis-lock-max-retries: 5
+        optimistic-lock-max-retries: 3
+        optimistic-lock-initial-delay-ms: 100
+        optimistic-lock-backoff-multiplier: 2.0
+      validation:
+        balance-tolerance: 0.01
+        enabled: true
+      cache:
+        check-define-refresh-ms: 300000
+
+# Logging configuration
+logging:
+  level:
+    com.oes.acct.vouch: INFO
+    org.springframework.jdbc.core.JdbcTemplate: DEBUG
+    org.springframework.jdbc.core.StatementCreatorUtils: TRACE
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 50MB
+      total-size-cap: 1GB

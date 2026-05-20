@@ -1,0 +1,1342 @@
+{
+  "projectName": "tetris-game",
+  "projectRoot": "AITest/code/w4/tetris",
+  "description": "Vue 3 + TypeScript + Canvas Tetris. Single-player + Battle + Items + Achievements + Leaderboard",
+  "nodes": [
+    {
+      "id": "file:package.json",
+      "type": "file",
+      "label": "package.json",
+      "properties": {
+        "language": "json",
+        "category": "config"
+      }
+    },
+    {
+      "id": "file:tsconfig.json",
+      "type": "file",
+      "label": "tsconfig.json",
+      "properties": {
+        "language": "json",
+        "category": "config"
+      }
+    },
+    {
+      "id": "file:vite.config.ts",
+      "type": "file",
+      "label": "vite.config.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "config"
+      }
+    },
+    {
+      "id": "file:index.html",
+      "type": "file",
+      "label": "index.html",
+      "properties": {
+        "language": "html",
+        "category": "markup"
+      }
+    },
+    {
+      "id": "file:src/main.ts",
+      "type": "file",
+      "label": "src/main.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/App.vue",
+      "type": "file",
+      "label": "src/App.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/constants.ts",
+      "type": "file",
+      "label": "src/constants.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/style.css",
+      "type": "file",
+      "label": "src/style.css",
+      "properties": {
+        "language": "css",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/types/tetris.ts",
+      "type": "file",
+      "label": "src/types/tetris.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/vite-env.d.ts",
+      "type": "file",
+      "label": "src/vite-env.d.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/router/index.ts",
+      "type": "file",
+      "label": "src/router/index.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/pages/Home.vue",
+      "type": "file",
+      "label": "src/pages/Home.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/pages/SingleGame.vue",
+      "type": "file",
+      "label": "src/pages/SingleGame.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/pages/BattleGame.vue",
+      "type": "file",
+      "label": "src/pages/BattleGame.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/pages/GameEnd.vue",
+      "type": "file",
+      "label": "src/pages/GameEnd.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/pages/Achievements.vue",
+      "type": "file",
+      "label": "src/pages/Achievements.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/pages/Rankings.vue",
+      "type": "file",
+      "label": "src/pages/Rankings.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/components/GameGrid.vue",
+      "type": "file",
+      "label": "src/components/GameGrid.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/components/NextBlock.vue",
+      "type": "file",
+      "label": "src/components/NextBlock.vue",
+      "properties": {
+        "language": "vue",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/composables/useTetris.ts",
+      "type": "file",
+      "label": "src/composables/useTetris.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/composables/useBattle.ts",
+      "type": "file",
+      "label": "src/composables/useBattle.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/utils/tetrisUtils.ts",
+      "type": "file",
+      "label": "src/utils/tetrisUtils.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/utils/storageUtils.ts",
+      "type": "file",
+      "label": "src/utils/storageUtils.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "file:src/utils/audioUtils.ts",
+      "type": "file",
+      "label": "src/utils/audioUtils.ts",
+      "properties": {
+        "language": "typescript",
+        "category": "code"
+      }
+    },
+    {
+      "id": "module:infrastructure",
+      "type": "module",
+      "label": "Infrastructure"
+    },
+    {
+      "id": "module:router",
+      "type": "module",
+      "label": "Router"
+    },
+    {
+      "id": "module:types",
+      "type": "module",
+      "label": "Types"
+    },
+    {
+      "id": "module:pages",
+      "type": "module",
+      "label": "Pages"
+    },
+    {
+      "id": "module:components",
+      "type": "module",
+      "label": "Components"
+    },
+    {
+      "id": "module:composables",
+      "type": "module",
+      "label": "Composables"
+    },
+    {
+      "id": "module:utils",
+      "type": "module",
+      "label": "Utils"
+    },
+    {
+      "id": "concept:single-player",
+      "type": "concept",
+      "label": "single-player"
+    },
+    {
+      "id": "concept:battle-mode",
+      "type": "concept",
+      "label": "battle-mode"
+    },
+    {
+      "id": "concept:item-system",
+      "type": "concept",
+      "label": "item-system"
+    },
+    {
+      "id": "concept:achievement-system",
+      "type": "concept",
+      "label": "achievement-system"
+    },
+    {
+      "id": "concept:leaderboard",
+      "type": "concept",
+      "label": "leaderboard"
+    },
+    {
+      "id": "concept:collision-detection",
+      "type": "concept",
+      "label": "collision-detection"
+    },
+    {
+      "id": "concept:wall-kick",
+      "type": "concept",
+      "label": "wall-kick"
+    },
+    {
+      "id": "concept:ghost-piece",
+      "type": "concept",
+      "label": "ghost-piece"
+    },
+    {
+      "id": "class:BlockType",
+      "type": "class",
+      "label": "BlockType enum",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 2
+      }
+    },
+    {
+      "id": "class:ItemType",
+      "type": "class",
+      "label": "ItemType enum",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 73
+      }
+    },
+    {
+      "id": "class:Block",
+      "type": "class",
+      "label": "Block",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 63
+      }
+    },
+    {
+      "id": "class:GridCell",
+      "type": "class",
+      "label": "GridCell",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 87
+      }
+    },
+    {
+      "id": "class:GameState",
+      "type": "class",
+      "label": "GameState",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 94
+      }
+    },
+    {
+      "id": "class:GameConfig",
+      "type": "class",
+      "label": "GameConfig",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 109
+      }
+    },
+    {
+      "id": "class:Achievement",
+      "type": "class",
+      "label": "Achievement",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 139
+      }
+    },
+    {
+      "id": "class:RankRecord",
+      "type": "class",
+      "label": "RankRecord",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 157
+      }
+    },
+    {
+      "id": "class:BattlePlayerState",
+      "type": "class",
+      "label": "BattlePlayerState",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 171
+      }
+    },
+    {
+      "id": "class:PlayerControls",
+      "type": "class",
+      "label": "PlayerControls",
+      "properties": {
+        "file": "types/tetris.ts",
+        "line": 179
+      }
+    },
+    {
+      "id": "class:UseTetrisOptions",
+      "type": "class",
+      "label": "UseTetrisOptions",
+      "properties": {
+        "file": "composables/useTetris.ts",
+        "line": 29
+      }
+    },
+    {
+      "id": "class:UseBattleOptions",
+      "type": "class",
+      "label": "UseBattleOptions",
+      "properties": {
+        "file": "composables/useBattle.ts",
+        "line": 34
+      }
+    },
+    {
+      "id": "fn:getRandomBlockType",
+      "type": "function",
+      "label": "getRandomBlockType()"
+    },
+    {
+      "id": "fn:getRandomItem",
+      "type": "function",
+      "label": "getRandomItem()"
+    },
+    {
+      "id": "fn:createBlock",
+      "type": "function",
+      "label": "createBlock()"
+    },
+    {
+      "id": "fn:rotateShape",
+      "type": "function",
+      "label": "rotateShape()"
+    },
+    {
+      "id": "fn:checkCollision",
+      "type": "function",
+      "label": "checkCollision()"
+    },
+    {
+      "id": "fn:moveBlock",
+      "type": "function",
+      "label": "moveBlock()"
+    },
+    {
+      "id": "fn:rotateBlock",
+      "type": "function",
+      "label": "rotateBlock()"
+    },
+    {
+      "id": "fn:lockBlock",
+      "type": "function",
+      "label": "lockBlock()"
+    },
+    {
+      "id": "fn:clearLines",
+      "type": "function",
+      "label": "clearLines()"
+    },
+    {
+      "id": "fn:calculateScore",
+      "type": "function",
+      "label": "calculateScore()"
+    },
+    {
+      "id": "fn:calculateLevel",
+      "type": "function",
+      "label": "calculateLevel()"
+    },
+    {
+      "id": "fn:getDropInterval",
+      "type": "function",
+      "label": "getDropInterval()"
+    },
+    {
+      "id": "fn:getGhostBlock",
+      "type": "function",
+      "label": "getGhostBlock()"
+    },
+    {
+      "id": "fn:createInitialGameState",
+      "type": "function",
+      "label": "createInitialGameState()"
+    },
+    {
+      "id": "fn:useTetris",
+      "type": "function",
+      "label": "useTetris()"
+    },
+    {
+      "id": "fn:useBattle",
+      "type": "function",
+      "label": "useBattle()"
+    },
+    {
+      "id": "fn:loadAchievements",
+      "type": "function",
+      "label": "loadAchievements()"
+    },
+    {
+      "id": "fn:saveAchievements",
+      "type": "function",
+      "label": "saveAchievements()"
+    },
+    {
+      "id": "fn:checkAndUnlockAchievements",
+      "type": "function",
+      "label": "checkAndUnlockAchievements()"
+    },
+    {
+      "id": "fn:loadRankings",
+      "type": "function",
+      "label": "loadRankings()"
+    },
+    {
+      "id": "fn:saveRankRecord",
+      "type": "function",
+      "label": "saveRankRecord()"
+    },
+    {
+      "id": "fn:playClearLines",
+      "type": "function",
+      "label": "playClearLines()"
+    },
+    {
+      "id": "fn:playGameOver",
+      "type": "function",
+      "label": "playGameOver()"
+    },
+    {
+      "id": "fn:toggleMute",
+      "type": "function",
+      "label": "toggleMute()"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:package.json",
+      "target": "module:infrastructure",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tsconfig.json",
+      "target": "module:infrastructure",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:vite.config.ts",
+      "target": "module:infrastructure",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:index.html",
+      "target": "module:infrastructure",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/main.ts",
+      "target": "module:infrastructure",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/App.vue",
+      "target": "module:infrastructure",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/constants.ts",
+      "target": "module:utils",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/style.css",
+      "target": "module:utils",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/vite-env.d.ts",
+      "target": "module:utils",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/types/tetris.ts",
+      "target": "module:types",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/router/index.ts",
+      "target": "module:router",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/pages/Home.vue",
+      "target": "module:pages",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/pages/SingleGame.vue",
+      "target": "module:pages",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/pages/BattleGame.vue",
+      "target": "module:pages",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/pages/GameEnd.vue",
+      "target": "module:pages",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/pages/Achievements.vue",
+      "target": "module:pages",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/pages/Rankings.vue",
+      "target": "module:pages",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/components/GameGrid.vue",
+      "target": "module:components",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/components/NextBlock.vue",
+      "target": "module:components",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/composables/useTetris.ts",
+      "target": "module:composables",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/composables/useBattle.ts",
+      "target": "module:composables",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/utils/tetrisUtils.ts",
+      "target": "module:utils",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/utils/storageUtils.ts",
+      "target": "module:utils",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/utils/audioUtils.ts",
+      "target": "module:utils",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:createInitialGameState",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:createInitialGameState",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:createBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:createBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:getRandomBlockType",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:getRandomBlockType",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:moveBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:moveBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:rotateBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:rotateBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:lockBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:lockBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:clearLines",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:clearLines",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:calculateScore",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:calculateScore",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:calculateLevel",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:calculateLevel",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:getDropInterval",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:getDropInterval",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:checkCollision",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "fn:checkCollision",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:getGhostBlock",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:loadAchievements",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:saveAchievements",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:saveRankRecord",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "fn:checkAndUnlockAchievements",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "fn:getRandomBlockType",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:getRandomItem",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:createBlock",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:rotateShape",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:checkCollision",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:moveBlock",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:rotateBlock",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:lockBlock",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:clearLines",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:calculateScore",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:calculateLevel",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:getDropInterval",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:getGhostBlock",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:createInitialGameState",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:loadAchievements",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:saveAchievements",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:checkAndUnlockAchievements",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:loadRankings",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:saveRankRecord",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:playClearLines",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:playGameOver",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "fn:toggleMute",
+      "target": "file:src/types/tetris.ts",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/router/index.ts",
+      "target": "file:src/pages/Home.vue",
+      "type": "routes",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/router/index.ts",
+      "target": "file:src/pages/SingleGame.vue",
+      "type": "routes",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/router/index.ts",
+      "target": "file:src/pages/BattleGame.vue",
+      "type": "routes",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/router/index.ts",
+      "target": "file:src/pages/GameEnd.vue",
+      "type": "routes",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/router/index.ts",
+      "target": "file:src/pages/Achievements.vue",
+      "type": "routes",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/router/index.ts",
+      "target": "file:src/pages/Rankings.vue",
+      "type": "routes",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/pages/SingleGame.vue",
+      "target": "file:src/components/GameGrid.vue",
+      "type": "contains",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/pages/BattleGame.vue",
+      "target": "file:src/components/GameGrid.vue",
+      "type": "contains",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/pages/SingleGame.vue",
+      "target": "file:src/components/NextBlock.vue",
+      "type": "contains",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/pages/BattleGame.vue",
+      "target": "file:src/components/NextBlock.vue",
+      "type": "contains",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/pages/Home.vue",
+      "target": "file:src/pages/SingleGame.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/Home.vue",
+      "target": "file:src/pages/BattleGame.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/Home.vue",
+      "target": "file:src/pages/Achievements.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/Home.vue",
+      "target": "file:src/pages/Rankings.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/SingleGame.vue",
+      "target": "file:src/pages/GameEnd.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/BattleGame.vue",
+      "target": "file:src/pages/GameEnd.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/GameEnd.vue",
+      "target": "file:src/pages/SingleGame.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/GameEnd.vue",
+      "target": "file:src/pages/BattleGame.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/GameEnd.vue",
+      "target": "file:src/pages/Home.vue",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:useTetris",
+      "target": "concept:single-player",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:useBattle",
+      "target": "concept:battle-mode",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:getRandomItem",
+      "target": "concept:item-system",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:lockBlock",
+      "target": "concept:item-system",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:checkAndUnlockAchievements",
+      "target": "concept:achievement-system",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:loadAchievements",
+      "target": "concept:achievement-system",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:loadRankings",
+      "target": "concept:leaderboard",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:saveRankRecord",
+      "target": "concept:leaderboard",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:checkCollision",
+      "target": "concept:collision-detection",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:rotateBlock",
+      "target": "concept:wall-kick",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "fn:getGhostBlock",
+      "target": "concept:ghost-piece",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/pages/SingleGame.vue",
+      "target": "fn:playClearLines",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/pages/SingleGame.vue",
+      "target": "fn:playGameOver",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/pages/BattleGame.vue",
+      "target": "fn:playGameOver",
+      "type": "calls",
+      "weight": 0.8
+    },
+    {
+      "source": "class:GameState",
+      "target": "class:GridCell",
+      "type": "contains",
+      "weight": 0.9
+    },
+    {
+      "source": "class:GameState",
+      "target": "class:Block",
+      "type": "contains",
+      "weight": 0.9
+    },
+    {
+      "source": "class:BattlePlayerState",
+      "target": "class:GameState",
+      "type": "contains",
+      "weight": 0.9
+    },
+    {
+      "source": "class:BattlePlayerState",
+      "target": "class:PlayerControls",
+      "type": "contains",
+      "weight": 0.9
+    },
+    {
+      "source": "class:Block",
+      "target": "class:BlockType",
+      "type": "contains",
+      "weight": 0.9
+    }
+  ],
+  "layers": [
+    {
+      "name": "Infrastructure",
+      "description": "Vite + Vue 3 + TypeScript configs, entry point, index.html",
+      "nodes": [
+        "file:package.json",
+        "file:tsconfig.json",
+        "file:vite.config.ts",
+        "file:index.html",
+        "file:src/main.ts",
+        "file:src/App.vue"
+      ]
+    },
+    {
+      "name": "Types",
+      "description": "All data structures (Block, GameState, Achievement, etc.)",
+      "nodes": [
+        "file:src/types/tetris.ts"
+      ]
+    },
+    {
+      "name": "Router",
+      "description": "Hash-based routing, 6 pages",
+      "nodes": [
+        "file:src/router/index.ts"
+      ]
+    },
+    {
+      "name": "Pages",
+      "description": "6 Vue page components",
+      "nodes": [
+        "file:src/pages/Home.vue",
+        "file:src/pages/SingleGame.vue",
+        "file:src/pages/BattleGame.vue",
+        "file:src/pages/GameEnd.vue",
+        "file:src/pages/Achievements.vue",
+        "file:src/pages/Rankings.vue"
+      ]
+    },
+    {
+      "name": "Components",
+      "description": "Reusable Canvas rendering components",
+      "nodes": [
+        "file:src/components/GameGrid.vue",
+        "file:src/components/NextBlock.vue"
+      ]
+    },
+    {
+      "name": "Composables",
+      "description": "Single-player and battle game state management",
+      "nodes": [
+        "file:src/composables/useTetris.ts",
+        "file:src/composables/useBattle.ts"
+      ]
+    },
+    {
+      "name": "Core Utils",
+      "description": "Game algorithms, persistence, audio synthesizer",
+      "nodes": [
+        "file:src/utils/tetrisUtils.ts",
+        "file:src/utils/storageUtils.ts",
+        "file:src/utils/audioUtils.ts",
+        "file:src/constants.ts",
+        "file:src/style.css"
+      ]
+    }
+  ],
+  "tourSteps": [
+    {
+      "id": "1-entry",
+      "title": "Entry & Router",
+      "description": "main.ts creates Vue app with hash router. 6 routes defined.",
+      "focus": [
+        "file:src/main.ts",
+        "file:src/router/index.ts"
+      ],
+      "order": 1
+    },
+    {
+      "id": "2-home",
+      "title": "Home page",
+      "description": "Game mode selection, rankings/achievements links, key binding help.",
+      "focus": [
+        "file:src/pages/Home.vue"
+      ],
+      "order": 2
+    },
+    {
+      "id": "3-single",
+      "title": "Single Player",
+      "description": "GameGrid + NextBlock combined. useTetris composable drives all game logic.",
+      "focus": [
+        "file:src/pages/SingleGame.vue",
+        "file:src/composables/useTetris.ts"
+      ],
+      "order": 3
+    },
+    {
+      "id": "4-battle",
+      "title": "Battle Mode",
+      "description": "Two players side-by-side. P1( WASD+Q ), P2( IJKL+U ). Items affect opponent.",
+      "focus": [
+        "file:src/pages/BattleGame.vue",
+        "file:src/composables/useBattle.ts"
+      ],
+      "order": 4
+    },
+    {
+      "id": "5-core",
+      "title": "Core Algorithms",
+      "description": "tetrisUtils.ts: collision, rotation+wall-kick, line clear, scoring, ghost piece.",
+      "focus": [
+        "file:src/utils/tetrisUtils.ts"
+      ],
+      "order": 5
+    },
+    {
+      "id": "6-types",
+      "title": "Type System",
+      "description": "All数据结构 in types/tetris.ts: 212 lines, 10 interfaces, 2 enums.",
+      "focus": [
+        "file:src/types/tetris.ts"
+      ],
+      "order": 6
+    },
+    {
+      "id": "7-persistence",
+      "title": "Persistence & Audio",
+      "description": "localStorage for achievements/rankings. Web Audio API programmatic SFX.",
+      "focus": [
+        "file:src/utils/storageUtils.ts",
+        "file:src/utils/audioUtils.ts"
+      ],
+      "order": 7
+    }
+  ]
+}
